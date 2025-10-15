@@ -1,0 +1,191 @@
+.calendar-schedule {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  padding: 1rem;
+  width: 98%;
+  margin: 0 auto;
+  min-height: 600px;
+}
+
+.calendar-container h2,
+.schedule-container h3 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.custom-calendar {
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem 2rem;
+  background: white;
+  font-size: 1.4em;
+  min-height: 550px;
+}
+
+.custom-calendar button {
+  padding: 2rem 2.5rem;
+  min-width: 80px;
+}
+
+.custom-calendar .react-calendar__tile--active {
+  background: #c3c3c3;
+  color: white;
+}
+
+.custom-calendar .react-calendar__tile--now {
+  background: #8ae1da;
+}
+
+.calendar-dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #9fa2dd;
+  color: white;
+  border-radius: 50%;
+  font-size: 10px;
+  margin: 2px auto;
+}
+
+.schedule-container {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-event {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.add-event input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.add-event input[type="time"] {
+  flex: 0 0 120px;
+}
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 1rem;
+  background: #646cff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.add-btn:hover {
+  background: #535bf2;
+}
+
+.events-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.event-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: #f9f9f9;
+  border-radius: 4px;
+  border-left: 3px solid #646cff;
+}
+
+.event-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.event-time {
+  font-weight: 600;
+  color: #646cff;
+  min-width: 60px;
+}
+
+.event-title {
+  color: #333;
+}
+
+.delete-btn {
+  padding: 0.4rem;
+  background: transparent;
+  border: none;
+  color: #ff4444;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.delete-btn:hover {
+  background: #ffebeb;
+}
+
+.no-events {
+  text-align: center;
+  color: #999;
+  padding: 2rem;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .calendar-schedule {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dark mode styles */
+.dark-mode .calendar-container h2,
+.dark-mode .schedule-container h3 {
+  color: #ffffff;
+}
+
+.dark-mode .custom-calendar,
+.dark-mode .schedule-container {
+  background: #1e293b;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .custom-calendar button {
+  color: #ffffff;
+}
+
+.dark-mode .add-event input {
+  background: #334155;
+  border-color: #475569;
+  color: #e2e8f0;
+}
+
+.dark-mode .event-item {
+  background: #334155;
+}
+
+.dark-mode .event-title {
+  color: #e2e8f0;
+}
+
+.dark-mode .no-events {
+  color: #64748b;
+}
