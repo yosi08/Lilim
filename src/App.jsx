@@ -6,10 +6,21 @@ import CalendarSchedule from './components/CalendarSchedule';
 import NotificationPanel from './components/NotificationPanel';
 import RecommendationPanel from './components/RecommendationPanel';
 import DarkModeToggle from './components/DarkModeToggle';
+import Login from './components/Login';
+import Signup from './components/Signup';
 import { CloudSun } from 'lucide-react';
 import './App.css';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+
+  if (!isLoggedIn) {
+    if (showSignup) {
+      return <Signup onBackToLogin={() => setShowSignup(false)} />;
+    }
+    return <Login onSignupClick={() => setShowSignup(true)} />;
+  }
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [airQuality, setAirQuality] = useState(null);

@@ -1,0 +1,310 @@
+.login-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Cloud styling */
+.clouds {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.cloud {
+  position: absolute;
+  background: white;
+  border-radius: 100px;
+  opacity: 0.8;
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 100px;
+}
+
+/* Cloud 1 - Large cloud */
+.cloud1 {
+  width: 200px;
+  height: 60px;
+  top: 20%;
+  left: -200px;
+  animation: moveCloud1 25s linear infinite;
+}
+
+.cloud1::before {
+  width: 80px;
+  height: 80px;
+  top: -40px;
+  left: 30px;
+}
+
+.cloud1::after {
+  width: 100px;
+  height: 100px;
+  top: -50px;
+  right: 30px;
+}
+
+/* Cloud 2 - Medium cloud */
+.cloud2 {
+  width: 150px;
+  height: 50px;
+  top: 40%;
+  left: -150px;
+  animation: moveCloud2 30s linear infinite;
+  animation-delay: 5s;
+}
+
+.cloud2::before {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  left: 20px;
+}
+
+.cloud2::after {
+  width: 70px;
+  height: 70px;
+  top: -35px;
+  right: 20px;
+}
+
+/* Cloud 3 - Small cloud */
+.cloud3 {
+  width: 120px;
+  height: 40px;
+  top: 60%;
+  left: -120px;
+  animation: moveCloud3 20s linear infinite;
+  animation-delay: 10s;
+}
+
+.cloud3::before {
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  left: 15px;
+}
+
+.cloud3::after {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  right: 15px;
+}
+
+/* Cloud 4 - Large cloud */
+.cloud4 {
+  width: 180px;
+  height: 55px;
+  top: 15%;
+  left: -180px;
+  animation: moveCloud4 35s linear infinite;
+  animation-delay: 15s;
+}
+
+.cloud4::before {
+  width: 70px;
+  height: 70px;
+  top: -35px;
+  left: 25px;
+}
+
+.cloud4::after {
+  width: 90px;
+  height: 90px;
+  top: -45px;
+  right: 25px;
+}
+
+/* Cloud 5 - Medium cloud */
+.cloud5 {
+  width: 140px;
+  height: 45px;
+  top: 50%;
+  left: -140px;
+  animation: moveCloud5 28s linear infinite;
+  animation-delay: 7s;
+}
+
+.cloud5::before {
+  width: 55px;
+  height: 55px;
+  top: -28px;
+  left: 18px;
+}
+
+.cloud5::after {
+  width: 65px;
+  height: 65px;
+  top: -32px;
+  right: 18px;
+}
+
+/* Cloud animations */
+@keyframes moveCloud1 {
+  0% {
+    left: -200px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes moveCloud2 {
+  0% {
+    left: -150px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes moveCloud3 {
+  0% {
+    left: -120px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes moveCloud4 {
+  0% {
+    left: -180px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes moveCloud5 {
+  0% {
+    left: -140px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Login box styling */
+.login-box {
+  position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  min-width: 350px;
+}
+
+.login-box h1 {
+  margin: 0 0 30px 0;
+  text-align: center;
+  color: #333;
+  font-size: 32px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-group label {
+  color: #555;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.input-group input {
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #87CEEB;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.login-button,
+.signup-button {
+  flex: 1;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.login-button {
+  background: linear-gradient(135deg, #87CEEB 0%, #5DADE2 100%);
+  color: white;
+}
+
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(87, 206, 235, 0.4);
+}
+
+.signup-button {
+  background: linear-gradient(135deg, #90EE90 0%, #32CD32 100%);
+  color: white;
+}
+
+.signup-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(50, 205, 50, 0.4);
+}
+
+.login-button:active,
+.signup-button:active {
+  transform: translateY(0);
+}
+
+.back-button {
+  width: 100%;
+  padding: 14px;
+  background: #f0f0f0;
+  color: #666;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.back-button:hover {
+  background: #e0e0e0;
+}
