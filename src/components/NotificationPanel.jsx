@@ -91,7 +91,7 @@ export default function NotificationPanel({ recommendations, weather }) {
       <div className="notification-header">
         <div className="notification-title">
           <Bell size={20} />
-          <h3>Notifications</h3>
+          <h3>알림</h3>
           {unreadCount > 0 && (
             <span className="notification-badge">{unreadCount}</span>
           )}
@@ -106,7 +106,7 @@ export default function NotificationPanel({ recommendations, weather }) {
           </button>
           {notifications.length > 0 && (
             <button onClick={clearAll} className="clear-btn">
-              Clear All
+              모두 지우기
             </button>
           )}
         </div>
@@ -114,7 +114,7 @@ export default function NotificationPanel({ recommendations, weather }) {
 
       <div className="notifications-list">
         {notifications.length === 0 ? (
-          <p className="no-notifications">No notifications</p>
+          <p className="no-notifications">알림 없음</p>
         ) : (
           notifications.map(notification => (
             <div
@@ -146,7 +146,7 @@ export default function NotificationPanel({ recommendations, weather }) {
 
       {recommendations && recommendations.summary && (
         <div className="notification-summary">
-          <h4>Today's Summary</h4>
+          <h4>오늘의 요약</h4>
           <p>{recommendations.summary}</p>
         </div>
       )}

@@ -1,6 +1,11 @@
 import './Login.css';
 
-function Login({ onSignupClick }) {
+function Login({ onSignupClick, onLoginSuccess }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onLoginSuccess();
+  };
+
   return (
     <div className="login-container">
       <div className="clouds">
@@ -12,21 +17,21 @@ function Login({ onSignupClick }) {
       </div>
 
       <div className="login-box">
-        <h1>Welcome</h1>
-        <form className="login-form">
+        <h1>어서오세요</h1>
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="input-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">사용자이름</label>
             <input type="text" id="username" name="username" />
           </div>
 
           <div className="input-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">비밀번호</label>
             <input type="password" id="password" name="password" />
           </div>
 
           <div className="button-group">
-            <button type="submit" className="login-button">Login</button>
-            <button type="button" className="signup-button" onClick={onSignupClick}>Sign Up</button>
+            <button type="submit" className="login-button">로그인</button>
+            <button type="button" className="signup-button" onClick={onSignupClick}>회원가입</button>
           </div>
         </form>
       </div>

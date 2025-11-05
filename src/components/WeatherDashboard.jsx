@@ -7,7 +7,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
   if (!weather) {
     return (
       <div className="weather-dashboard loading">
-        <p>Loading weather data...</p>
+        <p>날씨 데이터 로드하기...</p>
       </div>
     );
   }
@@ -48,7 +48,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
           <div className="weather-temp">
             <div className="temp-value">{current.temp}°C</div>
             <div className="temp-description">{current.description}</div>
-            <div className="temp-feels">Feels like {current.feelsLike}°C</div>
+            <div className="temp-feels">다음과 같은 느낌{current.feelsLike}°C</div>
           </div>
         </div>
 
@@ -56,7 +56,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
           <div className="detail-item">
             <Droplets size={20} />
             <div className="detail-info">
-              <span className="detail-label">Humidity</span>
+              <span className="detail-label">습도</span>
               <span className="detail-value">{current.humidity}%</span>
             </div>
           </div>
@@ -64,7 +64,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
           <div className="detail-item">
             <Wind size={20} />
             <div className="detail-info">
-              <span className="detail-label">Wind Speed</span>
+              <span className="detail-label">풍속</span>
               <span className="detail-value">{current.windSpeed} m/s</span>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
           <div className="detail-item">
             <Gauge size={20} />
             <div className="detail-info">
-              <span className="detail-label">Pressure</span>
+              <span className="detail-label">압력</span>
               <span className="detail-value">{current.pressure} hPa</span>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
           <div className="detail-item">
             <Eye size={20} />
             <div className="detail-info">
-              <span className="detail-label">Visibility</span>
+              <span className="detail-label">가시성</span>
               <span className="detail-value">{current.visibility} km</span>
             </div>
           </div>
@@ -88,7 +88,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
           <div className="detail-item">
             <Cloud size={20} />
             <div className="detail-info">
-              <span className="detail-label">Cloudiness</span>
+              <span className="detail-label">운량</span>
               <span className="detail-value">{current.clouds}%</span>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
             <div className="detail-item">
               <CloudRain size={20} />
               <div className="detail-info">
-                <span className="detail-label">Air Quality</span>
+                <span className="detail-label">공기 질</span>
                 <span
                   className="detail-value aqi"
                   style={{ color: getAQIColor(aqi) }}
@@ -112,7 +112,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
 
       {forecast && forecast.list && (
         <div className="weather-forecast">
-          <h3>5-Day Forecast</h3>
+          <h3>5일 예보</h3>
           <div className="forecast-list">
             {forecast.list
               .filter((item, index) => index % 8 === 0)

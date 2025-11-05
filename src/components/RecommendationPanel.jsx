@@ -20,14 +20,14 @@ export default function RecommendationPanel({ recommendations }) {
     <div className="recommendation-panel">
       <h2>
         <CheckCircle size={24} />
-        Today's Recommendations
+        오늘의 추천 사항
       </h2>
 
       {recommendations.alerts && recommendations.alerts.length > 0 && (
         <div className="recommendation-section alerts">
           <h3>
             <AlertTriangle size={20} />
-            Weather Alerts
+            기상 경보
           </h3>
           <div className="alert-list">
             {recommendations.alerts.map((alert, idx) => (
@@ -43,7 +43,7 @@ export default function RecommendationPanel({ recommendations }) {
         <div className="recommendation-section items">
           <h3>
             <Umbrella size={20} />
-            Don't Forget to Bring
+            잊지 말고 가져가세요
           </h3>
           <div className="items-grid">
             {recommendations.items.map((item, idx) => (
@@ -60,7 +60,7 @@ export default function RecommendationPanel({ recommendations }) {
         <div className="recommendation-section clothing">
           <h3>
             <Shirt size={20} />
-            Suggested Clothing
+            추천 의류
           </h3>
           <ul className="clothing-list">
             {recommendations.clothing.map((cloth, idx) => (
@@ -74,7 +74,7 @@ export default function RecommendationPanel({ recommendations }) {
        !recommendations.items?.length &&
        !recommendations.clothing?.length && (
         <div className="no-recommendations">
-          <p>Weather looks great! No special recommendations for today.</p>
+          <p>날씨가 좋아 보이네요! 오늘은 특별한 추천이 없습니다.</p>
         </div>
       )}
     </div>

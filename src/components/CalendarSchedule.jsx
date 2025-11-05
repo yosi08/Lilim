@@ -73,7 +73,7 @@ function CalendarSchedule({ onScheduleChange }) {
   return (
     <div className="calendar-schedule">
       <div className="calendar-container">
-        <h2>Schedule Calendar</h2>
+        <h2>일정 달력</h2>
         <Calendar
           onChange={handleDateChange}
           value={selectedDate}
@@ -92,6 +92,7 @@ export function ScheduleContainer({ onScheduleChange }) {
     return saved ? JSON.parse(saved) : {};
   });
   const [newEvent, setNewEvent] = useState({ title: '', time: '' });
+  const [showImage, setShowImage] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('schedules', JSON.stringify(schedules));
@@ -102,13 +103,13 @@ export function ScheduleContainer({ onScheduleChange }) {
   }, [schedules, onScheduleChange]);
 
   const addEvent = () => {
-    if (!newEvent.title || !newEvent.time) return;
+    if (!newEvent.title) return;
 
     const dateKey = format(selectedDate, 'yyyy-MM-dd');
     const event = {
       id: Date.now(),
       title: newEvent.title,
-      time: `${dateKey}T${newEvent.time}`,
+      time: newEvent.time ? `${dateKey}T${newEvent.time}` : null,
       date: dateKey
     };
 
@@ -116,6 +117,14 @@ export function ScheduleContainer({ onScheduleChange }) {
       ...prev,
       [dateKey]: [...(prev[dateKey] || []), event]
     }));
+
+    // "이민길"일 때 이미지 표시
+    if (newEvent.title === '이민길') {
+      setShowImage(true);
+      setTimeout(() => {
+        setShowImage(false);
+      }, 3000);
+    }
 
     setNewEvent({ title: '', time: '' });
   };
@@ -134,6 +143,12 @@ export function ScheduleContainer({ onScheduleChange }) {
 
   return (
     <div className="schedule-container">
+      {showImage && (
+        <div className="image-overlay">
+          <img src="/src/assets/minrorong 복사본.png" alt="민로롱" />
+        </div>
+      )}
+
       <h3>{format(selectedDate, 'MMMM dd, yyyy')}</h3>
 
       <div className="add-event">
@@ -142,7 +157,7 @@ export function ScheduleContainer({ onScheduleChange }) {
           placeholder="Event title"
           value={newEvent.title}
           onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-          onKeyPress={(e) => e.key === 'Enter' && addEvent()}
+          onKeyDown={(e) => e.key === 'Enter' && addEvent()}
         />
         <input
           type="time"
@@ -157,17 +172,25 @@ export function ScheduleContainer({ onScheduleChange }) {
 
       <div className="events-list">
         {getTodaySchedules().length === 0 ? (
-          <p className="no-events">No events scheduled for this day</p>
+          <p className="no-events">이 날에는 행사가 예정되어 있지 않습니다</p>
         ) : (
           getTodaySchedules()
-            .sort((a, b) => a.time.localeCompare(b.time))
+            .sort((a, b) => {
+              if (!a.time) return 1;
+              if (!b.time) return -1;
+              return a.time.localeCompare(b.time);
+            })
             .map(event => (
               <div key={event.id} className="event-item">
                 <div className="event-info">
-                  <Clock size={16} />
-                  <span className="event-time">
-                    {format(new Date(event.time), 'HH:mm')}
-                  </span>
+                  {event.time && (
+                    <>
+                      <Clock size={16} />
+                      <span className="event-time">
+                        {format(new Date(event.time), 'HH:mm')}
+                      </span>
+                    </>
+                  )}
                   <span className="event-title">{event.title}</span>
                 </div>
                 <button

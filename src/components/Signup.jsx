@@ -12,30 +12,30 @@ function Signup({ onBackToLogin }) {
       </div>
 
       <div className="login-box">
-        <h1>Sign Up</h1>
+        <h1>로그인</h1>
         <form className="login-form">
           <div className="input-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="username">사용자이름</label>
             <input type="text" id="username" name="username" />
           </div>
 
           <div className="input-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">이메일</label>
             <input type="email" id="email" name="email" />
           </div>
 
           <div className="input-group">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">비밀번호</label>
             <input type="password" id="password" name="password" />
           </div>
 
           <div className="input-group">
-            <label htmlFor="confirm-password">Confirm Password</label>
+            <label htmlFor="confirm-password">비밀번호 확인</label>
             <input type="password" id="confirm-password" name="confirm-password" />
           </div>
 
-          <button type="submit" className="login-button">Create Account</button>
-          <button type="button" className="back-button" onClick={onBackToLogin}>Back to Login</button>
+          <button type="submit" className="login-button">계정 만들기</button>
+          <button type="button" className="back-button" onClick={onBackToLogin}>로그인으로 돌아가기</button>
         </form>
       </div>
     </div>
