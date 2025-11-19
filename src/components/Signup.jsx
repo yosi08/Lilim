@@ -1,6 +1,12 @@
 import './Login.css';
 
 function Signup({ onBackToLogin }) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // 회원가입 로직 처리
+    console.log('회원가입 처리');
+  };
+
   return (
     <div className="login-container">
       <div className="clouds">
@@ -12,8 +18,8 @@ function Signup({ onBackToLogin }) {
       </div>
 
       <div className="login-box">
-        <h1>로그인</h1>
-        <form className="login-form">
+        <h1>회원가입</h1>
+        <form className="login-form" onSubmit={handleSubmit}>
           <div className="input-group">
             <label htmlFor="username">사용자이름</label>
             <input type="text" id="username" name="username" />

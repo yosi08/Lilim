@@ -93,6 +93,7 @@ export function ScheduleContainer({ onScheduleChange }) {
   });
   const [newEvent, setNewEvent] = useState({ title: '', time: '' });
   const [showImage, setShowImage] = useState(false);
+  const [isComposing, setIsComposing] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('schedules', JSON.stringify(schedules));
@@ -157,7 +158,14 @@ export function ScheduleContainer({ onScheduleChange }) {
           placeholder="Event title"
           value={newEvent.title}
           onChange={(e) => setNewEvent({ ...newEvent, title: e.target.value })}
-          onKeyDown={(e) => e.key === 'Enter' && addEvent()}
+          onCompositionStart={() => setIsComposing(true)}
+          onCompositionEnd={() => setIsComposing(false)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && !isComposing) {
+              e.preventDefault();
+              addEvent();
+            }
+          }}
         />
         <input
           type="time"

@@ -40,47 +40,47 @@ export const aiService = {
 
     // Weather condition recommendations
     if (weatherCondition.includes('rain') || weatherCondition.includes('drizzle')) {
-      recommendations.items.push('☔ Umbrella');
-      recommendations.items.push('Raincoat or waterproof jacket');
-      recommendations.alerts.push('🌧️ Rain expected - bring an umbrella!');
+      recommendations.items.push('');
+      recommendations.items.push('');
+      recommendations.alerts.push('');
     }
 
     if (weatherCondition.includes('snow')) {
-      recommendations.items.push('❄️ Winter boots');
-      recommendations.items.push('Umbrella');
-      recommendations.alerts.push('❄️ Snow expected - drive carefully!');
+      recommendations.items.push('');
+      recommendations.items.push('');
+      recommendations.alerts.push('');
     }
 
     if (weatherCondition.includes('thunderstorm')) {
-      recommendations.alerts.push('⚡ Thunderstorm warning - stay safe indoors if possible!');
+      recommendations.alerts.push('');
     }
 
     // Air quality recommendations
     if (airQuality) {
       const aqi = airQuality.list?.[0]?.main?.aqi || 1;
       if (aqi >= 3) {
-        recommendations.items.push('😷 Face mask (poor air quality)');
-        recommendations.alerts.push('🌫️ Poor air quality - wear a mask outdoors!');
+        recommendations.items.push('');
+        recommendations.alerts.push('');
       } else if (aqi >= 2) {
-        recommendations.items.push('😷 Face mask (moderate air quality)');
+        recommendations.items.push('');
       }
     }
 
     // Wind recommendations
     if (windSpeed > 10) {
-      recommendations.alerts.push('💨 Strong winds expected!');
+      recommendations.alerts.push('');
     }
 
     // Humidity recommendations
     if (humidity > 80) {
-      recommendations.alerts.push('💧 High humidity - may feel muggy');
+      recommendations.alerts.push('');
     }
 
     // UV/Sun recommendations
     if (weatherCondition.includes('clear') && temp > 20) {
-      recommendations.items.push('🕶️ Sunglasses');
-      recommendations.items.push('Sunscreen');
-      recommendations.alerts.push('☀️ Sunny day - protect your skin!');
+      recommendations.items.push('');
+      recommendations.items.push('');
+      recommendations.alerts.push('');
     }
 
     // Generate summary

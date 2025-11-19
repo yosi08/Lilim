@@ -8,12 +8,15 @@ import RecommendationPanel from './components/RecommendationPanel';
 import DarkModeToggle from './components/DarkModeToggle';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import { CloudSun } from 'lucide-react';
+import Settings from './components/Settings';
+import { CloudSun, User, Settings as SettingsIcon } from 'lucide-react';
 import './App.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [airQuality, setAirQuality] = useState(null);
@@ -47,6 +50,19 @@ function App() {
       document.body.classList.remove('dark-mode');
     }
   }, [darkMode]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showProfile && !event.target.closest('.profile-icon') && !event.target.closest('.profile-panel')) {
+        setShowProfile(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showProfile]);
 
   const loadWeatherData = async () => {
     try {
@@ -82,6 +98,20 @@ function App() {
     setDarkMode(!darkMode);
   };
 
+  const toggleProfile = () => {
+    setShowProfile(!showProfile);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setShowProfile(false);
+    setWeather(null);
+    setForecast(null);
+    setAirQuality(null);
+    setRecommendations(null);
+    setSchedule([]);
+  };
+
   if (!isLoggedIn) {
     if (showSignup) {
       return <Signup onBackToLogin={() => setShowSignup(false)} />;
@@ -115,13 +145,40 @@ function App() {
 
   return (
     <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
-      <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} />
       <header className="app-header">
-        <h1>
-          <CloudSun size={32} />
-          에이아이 날씨 서비스
-        </h1>
-        <p>당신의 지적인 날씨 동반자</p>
+        <div className="profile-icon" onClick={toggleProfile}>
+          <User size={32} />
+        </div>
+        {showProfile && (
+          <div className="profile-panel">
+            <div className="profile-header">
+              <div className="profile-avatar">
+                <User size={48} />
+              </div>
+              <h3>사용자 프로필</h3>
+            </div>
+            <div className="profile-info">
+              <p><strong>이메일:</strong> 이메일이 들어가겟지.</p>
+            </div>
+            <div className="profile-actions">
+              <button className="settings-btn" onClick={() => { setShowSettings(true); setShowProfile(false); }}>
+                <SettingsIcon size={18} />
+                설정
+              </button>
+              <button className="logout-btn" onClick={handleLogout}>
+                로그아웃
+              </button>
+            </div>
+          </div>
+        )}
+        <div className="header-content">
+          <h1>
+            <CloudSun size={32} />
+            에이아이 날씨 서비스
+          </h1>
+          <p>당신의 지적인 날씨 동반자</p>
+        </div>
+        <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} />
       </header>
 
       <main className="app-main">
@@ -147,6 +204,14 @@ function App() {
           <CalendarSchedule onScheduleChange={handleScheduleChange} />
         </div>
       </main>
+
+      {showSettings && (
+        <Settings
+          onClose={() => setShowSettings(false)}
+          darkMode={darkMode}
+          onDarkModeToggle={toggleDarkMode}
+        />
+      )}
     </div>
   );
 }
