@@ -148,3 +148,4 @@ function Settings({ onClose, darkMode, onDarkModeToggle }) {
 }
 
 export default Settings;
+

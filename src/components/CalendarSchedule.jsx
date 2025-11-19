@@ -106,6 +106,12 @@ export function ScheduleContainer({ onScheduleChange }) {
   const addEvent = () => {
     if (!newEvent.title) return;
 
+    // "테트리게이"일 때 테트리오로 이동
+    if (newEvent.title === '테트리게이') {
+      window.location.href = 'https://tetr.io/';
+      return;
+    }
+
     const dateKey = format(selectedDate, 'yyyy-MM-dd');
     const event = {
       id: Date.now(),

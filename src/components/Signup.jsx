@@ -3,7 +3,6 @@ import './Login.css';
 function Signup({ onBackToLogin }) {
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 회원가입 로직 처리
     console.log('회원가입 처리');
   };
 
