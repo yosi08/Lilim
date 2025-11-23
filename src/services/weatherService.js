@@ -31,8 +31,8 @@ const MOCK_WEATHER = {
 const MOCK_FORECAST = {
   cod: '200',
   message: 0,
-  cnt: 40,
-  list: Array.from({ length: 40 }, (_, i) => ({
+  cnt: 56,
+  list: Array.from({ length: 56 }, (_, i) => ({
     dt: Date.now() / 1000 + i * 10800,
     main: {
       temp: 18 + Math.sin(i / 3) * 5,
@@ -107,7 +107,7 @@ export const weatherService = {
   },
 
   /**
-   * Get 5-day weather forecast
+   * Get 7-day weather forecast
    * @param {number} lat - Latitude
    * @param {number} lon - Longitude
    * @returns {Promise} Forecast data

@@ -3,10 +3,278 @@
   background: linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%);
   padding: 2rem;
   transition: background 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .app.dark-mode {
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+/* Sun styling */
+.app .sun {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  background: radial-gradient(circle, #FFD700 0%, #FFA500 70%);
+  border-radius: 50%;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+  box-shadow:
+    0 0 40px rgba(255, 215, 0, 0.6),
+    0 0 80px rgba(255, 215, 0, 0.4),
+    0 0 120px rgba(255, 215, 0, 0.2);
+  animation: sunGlow 4s ease-in-out infinite;
+}
+
+.app .sun::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: 50%;
+  animation: sunPulse 3s ease-in-out infinite;
+}
+
+/* Dark mode sun becomes moon */
+.app.dark-mode .sun {
+  background: radial-gradient(circle, #F4F6F9 0%, #E0E5EC 70%);
+  box-shadow:
+    0 0 30px rgba(244, 246, 249, 0.5),
+    0 0 60px rgba(244, 246, 249, 0.3),
+    0 0 90px rgba(244, 246, 249, 0.1);
+}
+
+/* Sun animations */
+@keyframes sunGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 40px rgba(255, 215, 0, 0.6),
+      0 0 80px rgba(255, 215, 0, 0.4),
+      0 0 120px rgba(255, 215, 0, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 50px rgba(255, 215, 0, 0.7),
+      0 0 100px rgba(255, 215, 0, 0.5),
+      0 0 150px rgba(255, 215, 0, 0.3);
+  }
+}
+
+@keyframes sunPulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.6;
+  }
+}
+
+/* Cloud styling */
+.app .cloud {
+  position: absolute;
+  background: white;
+  border-radius: 100px;
+  opacity: 0.7;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.app .cloud::before,
+.app .cloud::after {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 100px;
+}
+
+/* Dark mode clouds */
+.app.dark-mode .cloud,
+.app.dark-mode .cloud::before,
+.app.dark-mode .cloud::after {
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 0.5;
+}
+
+/* Cloud 1 - Large cloud */
+.app .cloud1 {
+  width: 200px;
+  height: 60px;
+  top: 20%;
+  left: -200px;
+  animation: moveCloud1 25s linear infinite;
+}
+
+.app .cloud1::before {
+  width: 80px;
+  height: 80px;
+  top: -40px;
+  left: 30px;
+}
+
+.app .cloud1::after {
+  width: 100px;
+  height: 100px;
+  top: -50px;
+  right: 30px;
+}
+
+/* Cloud 2 - Medium cloud */
+.app .cloud2 {
+  width: 150px;
+  height: 50px;
+  top: 40%;
+  left: -150px;
+  animation: moveCloud2 30s linear infinite;
+  animation-delay: 5s;
+}
+
+.app .cloud2::before {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  left: 20px;
+}
+
+.app .cloud2::after {
+  width: 70px;
+  height: 70px;
+  top: -35px;
+  right: 20px;
+}
+
+/* Cloud 3 - Small cloud */
+.app .cloud3 {
+  width: 120px;
+  height: 40px;
+  top: 60%;
+  left: -120px;
+  animation: moveCloud3 20s linear infinite;
+  animation-delay: 10s;
+}
+
+.app .cloud3::before {
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  left: 15px;
+}
+
+.app .cloud3::after {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  right: 15px;
+}
+
+/* Cloud 4 - Large cloud */
+.app .cloud4 {
+  width: 180px;
+  height: 55px;
+  top: 15%;
+  left: -180px;
+  animation: moveCloud4 35s linear infinite;
+  animation-delay: 15s;
+}
+
+.app .cloud4::before {
+  width: 70px;
+  height: 70px;
+  top: -35px;
+  left: 25px;
+}
+
+.app .cloud4::after {
+  width: 90px;
+  height: 90px;
+  top: -45px;
+  right: 25px;
+}
+
+/* Cloud 5 - Medium cloud */
+.app .cloud5 {
+  width: 140px;
+  height: 45px;
+  top: 50%;
+  left: -140px;
+  animation: moveCloud5 28s linear infinite;
+  animation-delay: 7s;
+}
+
+.app .cloud5::before {
+  width: 55px;
+  height: 55px;
+  top: -28px;
+  left: 18px;
+}
+
+.app .cloud5::after {
+  width: 65px;
+  height: 65px;
+  top: -32px;
+  right: 18px;
+}
+
+/* Cloud animations */
+@keyframes moveCloud1 {
+  0% {
+    left: -200px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes moveCloud2 {
+  0% {
+    left: -150px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes moveCloud3 {
+  0% {
+    left: -120px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes moveCloud4 {
+  0% {
+    left: -180px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes moveCloud5 {
+  0% {
+    left: -140px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Ensure content is above clouds */
+.app-header,
+.app-main {
+  position: relative;
+  z-index: 1;
 }
 
 .app-header {
@@ -16,6 +284,7 @@
   color: white;
   margin-bottom: 2rem;
   position: relative;
+  z-index: 4000;
 }
 
 .profile-icon {
@@ -29,6 +298,8 @@
   cursor: pointer;
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 3000;
 }
 
 .profile-icon:hover {
@@ -66,7 +337,7 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   padding: 1.5rem;
   min-width: 280px;
-  z-index: 1000;
+  z-index: 3000;
   animation: slideDown 0.3s ease;
 }
 
@@ -234,8 +505,16 @@
   text-align: center;
 }
 
+.loading-screen > *:not(.cloud),
+.error-screen > *:not(.cloud) {
+  position: relative;
+  z-index: 1;
+}
+
 .loading-icon {
   animation: pulse 2s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes pulse {

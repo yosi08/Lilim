@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Bell, BellOff, Check } from 'lucide-react';
+import { Bell, BellOff, Check, Send } from 'lucide-react';
 import './NotificationPanel.css';
+import { webhookService } from '../services/webhookService';
 
 export default function NotificationPanel({ recommendations, weather }) {
   const [notifications, setNotifications] = useState([]);
@@ -8,6 +9,7 @@ export default function NotificationPanel({ recommendations, weather }) {
     const saved = localStorage.getItem('notificationsEnabled');
     return saved ? JSON.parse(saved) : true;
   });
+  const [webhookStatus, setWebhookStatus] = useState('');
 
   useEffect(() => {
     if (enabled && recommendations) {
@@ -84,6 +86,27 @@ export default function NotificationPanel({ recommendations, weather }) {
     }
   };
 
+  const sendToDiscord = async () => {
+    const webhookUrl = localStorage.getItem('webhookUrl');
+
+    if (!webhookUrl) {
+      setWebhookStatus('웹훅 URL을 설정에서 먼저 등록해주세요.');
+      setTimeout(() => setWebhookStatus(''), 3000);
+      return;
+    }
+
+    try {
+      setWebhookStatus('전송 중...');
+      await webhookService.sendWeatherNotification(webhookUrl, weather, recommendations);
+      setWebhookStatus('✅ 디스코드로 전송 완료!');
+      setTimeout(() => setWebhookStatus(''), 3000);
+    } catch (error) {
+      console.error('Failed to send to Discord:', error);
+      setWebhookStatus('❌ 전송 실패. 웹훅 URL을 확인해주세요.');
+      setTimeout(() => setWebhookStatus(''), 3000);
+    }
+  };
+
   const unreadCount = notifications.filter(n => !n.read).length;
 
   return (
@@ -98,6 +121,13 @@ export default function NotificationPanel({ recommendations, weather }) {
         </div>
         <div className="notification-actions">
           <button
+            onClick={sendToDiscord}
+            className="discord-btn"
+            title="디스코드로 전송"
+          >
+            <Send size={18} />
+          </button>
+          <button
             onClick={toggleNotifications}
             className={`toggle-btn ${enabled ? 'enabled' : 'disabled'}`}
             title={enabled ? 'Disable notifications' : 'Enable notifications'}
@@ -111,6 +141,12 @@ export default function NotificationPanel({ recommendations, weather }) {
           )}
         </div>
       </div>
+
+      {webhookStatus && (
+        <div className="webhook-status-notification">
+          {webhookStatus}
+        </div>
+      )}
 
       <div className="notifications-list">
         {notifications.length === 0 ? (

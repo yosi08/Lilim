@@ -47,6 +47,28 @@
   gap: 0.5rem;
 }
 
+.discord-btn {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #5865F2;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.discord-btn:hover {
+  background: #4752C4;
+  transform: translateY(-1px);
+}
+
+.discord-btn:active {
+  transform: translateY(0);
+}
+
 .toggle-btn {
   padding: 0.5rem;
   border: none;
@@ -209,4 +231,33 @@
 
 .dark-mode .clear-btn:hover {
   background: #334155;
+}
+
+.webhook-status-notification {
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: center;
+  background: rgba(88, 101, 242, 0.1);
+  color: #5865F2;
+  border: 1px solid rgba(88, 101, 242, 0.3);
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dark-mode .webhook-status-notification {
+  background: rgba(88, 101, 242, 0.2);
+  color: #8b9cf2;
 }

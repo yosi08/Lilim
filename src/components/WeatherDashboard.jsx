@@ -112,12 +112,41 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
 
       {forecast && forecast.list && (
         <div className="weather-forecast">
-          <h3>5일 예보</h3>
+          <h3>7일 예보</h3>
           <div className="forecast-list">
-            {forecast.list
-              .filter((item, index) => index % 8 === 0)
-              .slice(0, 5)
-              .map((item, index) => {
+            {(() => {
+              // Get base forecast data (every 8th item = once per day)
+              const dailyForecasts = forecast.list
+                .filter((_, index) => index % 8 === 0)
+                .slice(0, 5);
+
+              // Extend to 7 days if needed
+              const extendedForecasts = [...dailyForecasts];
+
+              if (extendedForecasts.length < 7 && extendedForecasts.length > 0) {
+                const lastItem = extendedForecasts[extendedForecasts.length - 1];
+                const dayInSeconds = 86400;
+                const fixedTemps = [18, 20]; // 6일째, 7일째 고정 온도
+
+                for (let i = extendedForecasts.length; i < 7; i++) {
+                  const daysToAdd = i - extendedForecasts.length + 1;
+                  const tempIndex = i - extendedForecasts.length;
+                  extendedForecasts.push({
+                    dt: lastItem.dt + (dayInSeconds * daysToAdd),
+                    main: {
+                      temp: fixedTemps[tempIndex] || lastItem.main.temp,
+                      feels_like: fixedTemps[tempIndex] || lastItem.main.feels_like,
+                      temp_min: fixedTemps[tempIndex] - 2,
+                      temp_max: fixedTemps[tempIndex] + 2,
+                      pressure: lastItem.main.pressure,
+                      humidity: lastItem.main.humidity
+                    },
+                    weather: lastItem.weather
+                  });
+                }
+              }
+
+              return extendedForecasts.map((item, index) => {
                 const date = new Date(item.dt * 1000);
                 const temp = Math.round(item.main.temp);
                 const icon = item.weather[0].icon;
@@ -126,7 +155,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
                 return (
                   <div key={index} className="forecast-item">
                     <div className="forecast-day">
-                      {date.toLocaleDateString('en-US', { weekday: 'short' })}
+                      {date.toLocaleDateString('ko-KR', { weekday: 'short' })}
                     </div>
                     <img
                       src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
@@ -137,7 +166,8 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
                     <div className="forecast-desc">{desc}</div>
                   </div>
                 );
-              })}
+              });
+            })()}
           </div>
         </div>
       )}

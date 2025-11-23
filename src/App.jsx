@@ -122,6 +122,12 @@ function App() {
   if (loading) {
     return (
       <div className={`app loading-screen ${darkMode ? 'dark-mode' : ''}`}>
+        <div className="sun"></div>
+        <div className="cloud cloud1"></div>
+        <div className="cloud cloud2"></div>
+        <div className="cloud cloud3"></div>
+        <div className="cloud cloud4"></div>
+        <div className="cloud cloud5"></div>
         <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} />
         <CloudSun size={64} className="loading-icon" />
         <h2>날씨 데이터 로드하기...</h2>
@@ -133,6 +139,12 @@ function App() {
   if (error) {
     return (
       <div className={`app error-screen ${darkMode ? 'dark-mode' : ''}`}>
+        <div className="sun"></div>
+        <div className="cloud cloud1"></div>
+        <div className="cloud cloud2"></div>
+        <div className="cloud cloud3"></div>
+        <div className="cloud cloud4"></div>
+        <div className="cloud cloud5"></div>
         <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} />
         <h2>날씨를 로드할 수 없음</h2>
         <p>{error}</p>
@@ -145,6 +157,12 @@ function App() {
 
   return (
     <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
+      <div className="sun"></div>
+      <div className="cloud cloud1"></div>
+      <div className="cloud cloud2"></div>
+      <div className="cloud cloud3"></div>
+      <div className="cloud cloud4"></div>
+      <div className="cloud cloud5"></div>
       <header className="app-header">
         <div className="profile-icon" onClick={toggleProfile}>
           <User size={32} />

@@ -1,7 +1,7 @@
 .dark-mode-toggle {
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
+  position: fixed !important;
+  top: 2rem !important;
+  right: 2rem !important;
   width: 50px;
   height: 50px;
   border-radius: 50%;
@@ -14,7 +14,8 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
-  z-index: 1000;
+  z-index: 5000;
+  outline: none;
 }
 
 .dark-mode-toggle:hover {
@@ -24,6 +25,12 @@
 
 .dark-mode-toggle:active {
   transform: scale(0.95);
+  outline: none;
+}
+
+.dark-mode-toggle:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 @media (max-width: 768px) {

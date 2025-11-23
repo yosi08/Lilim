@@ -1,7 +1,29 @@
-import { X, User, Bell, Moon, Globe, Shield } from 'lucide-react';
+import { X, User, Bell, Moon, Globe, Shield, Webhook } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import './Settings.css';
 
 function Settings({ onClose, darkMode, onDarkModeToggle }) {
+  const [webhookUrl, setWebhookUrl] = useState('');
+  const [webhookStatus, setWebhookStatus] = useState('');
+
+  useEffect(() => {
+    const savedWebhookUrl = localStorage.getItem('webhookUrl');
+    if (savedWebhookUrl) {
+      setWebhookUrl(savedWebhookUrl);
+    }
+  }, []);
+
+  const handleSaveWebhook = () => {
+    if (webhookUrl.trim()) {
+      localStorage.setItem('webhookUrl', webhookUrl);
+      setWebhookStatus('웹훅 URL이 저장되었습니다.');
+      setTimeout(() => setWebhookStatus(''), 3000);
+    } else {
+      setWebhookStatus('유효한 URL을 입력해주세요.');
+      setTimeout(() => setWebhookStatus(''), 3000);
+    }
+  };
+
   return (
     <div className="settings-overlay">
       <div className="settings-container">
@@ -36,6 +58,34 @@ function Settings({ onClose, darkMode, onDarkModeToggle }) {
               />
             </div>
             <button className="save-btn">변경 사항 저장</button>
+          </section>
+
+          <section className="settings-section">
+            <div className="section-header">
+              <Webhook size={20} />
+              <h3>웹훅 설정</h3>
+            </div>
+            <div className="setting-item">
+              <label htmlFor="webhookUrl">디스코드 웹훅 URL</label>
+              <input
+                type="text"
+                id="webhookUrl"
+                value={webhookUrl}
+                onChange={(e) => setWebhookUrl(e.target.value)}
+                placeholder="https://discord.com/api/webhooks/..."
+              />
+              <p className="toggle-description">
+                날씨 및 일정 알림을 받을 디스코드 웹훅 URL을 입력하세요
+              </p>
+              {webhookStatus && (
+                <p className={`webhook-status ${webhookStatus.includes('저장') ? 'success' : 'error'}`}>
+                  {webhookStatus}
+                </p>
+              )}
+            </div>
+            <button className="save-btn" onClick={handleSaveWebhook}>
+              웹훅 URL 저장
+            </button>
           </section>
           <section className="Requirements-settings-section">
             <div className="section-header">
