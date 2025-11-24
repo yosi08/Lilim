@@ -141,6 +141,18 @@
   transform: translateY(-2px);
 }
 
+.forecast-item.selected {
+  background: #646cff;
+  color: white;
+  transform: scale(1.05);
+}
+
+.forecast-item.selected .forecast-day,
+.forecast-item.selected .forecast-temp,
+.forecast-item.selected .forecast-desc {
+  color: white;
+}
+
 .forecast-day {
   font-weight: 600;
   color: #646cff;
@@ -212,4 +224,138 @@
   margin-top: 2rem;
   border-top: 1px solid #eee;
   padding-top: 1.5rem;
+}
+
+/* Hourly Weather Styles */
+.hourly-weather {
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.hourly-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.hourly-header h3 {
+  margin: 0;
+  color: #333;
+}
+
+.close-btn {
+  padding: 0.5rem 1rem;
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.close-btn:hover {
+  background: #ff2222;
+}
+
+.hourly-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.hourly-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background: #f0f4ff;
+  border-radius: 8px;
+  border: 2px solid #646cff;
+  transition: transform 0.2s;
+}
+
+.hourly-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(100, 108, 255, 0.2);
+}
+
+.hourly-time {
+  font-weight: 700;
+  color: #646cff;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.hourly-icon {
+  width: 70px;
+  height: 70px;
+  margin: -5px 0;
+}
+
+.hourly-temp {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0.3rem 0;
+}
+
+.hourly-details {
+  display: flex;
+  gap: 1rem;
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.hourly-desc {
+  font-size: 0.85rem;
+  color: #666;
+  text-align: center;
+  text-transform: capitalize;
+  margin-top: 0.3rem;
+}
+
+/* Dark mode for hourly weather */
+.dark-mode .hourly-weather {
+  border-top-color: #475569;
+}
+
+.dark-mode .hourly-header h3 {
+  color: #e2e8f0;
+}
+
+.dark-mode .hourly-item {
+  background: #334155;
+  border-color: #64748b;
+}
+
+.dark-mode .hourly-temp {
+  color: #e2e8f0;
+}
+
+.dark-mode .hourly-details,
+.dark-mode .hourly-desc {
+  color: #cbd5e1;
+}
+
+@media (max-width: 768px) {
+  .hourly-list {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .hourly-item {
+    padding: 0.75rem;
+  }
+
+  .hourly-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .hourly-temp {
+    font-size: 1.2rem;
+  }
 }

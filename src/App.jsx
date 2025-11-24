@@ -128,6 +128,11 @@ function App() {
         <div className="cloud cloud3"></div>
         <div className="cloud cloud4"></div>
         <div className="cloud cloud5"></div>
+        <div className="cloud cloud6"></div>
+        <div className="cloud cloud7"></div>
+        <div className="cloud cloud8"></div>
+        <div className="cloud cloud9"></div>
+        <div className="cloud cloud10"></div>
         <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} />
         <CloudSun size={64} className="loading-icon" />
         <h2>날씨 데이터 로드하기...</h2>
@@ -145,6 +150,11 @@ function App() {
         <div className="cloud cloud3"></div>
         <div className="cloud cloud4"></div>
         <div className="cloud cloud5"></div>
+        <div className="cloud cloud6"></div>
+        <div className="cloud cloud7"></div>
+        <div className="cloud cloud8"></div>
+        <div className="cloud cloud9"></div>
+        <div className="cloud cloud10"></div>
         <DarkModeToggle darkMode={darkMode} onToggle={toggleDarkMode} />
         <h2>날씨를 로드할 수 없음</h2>
         <p>{error}</p>
@@ -163,6 +173,11 @@ function App() {
       <div className="cloud cloud3"></div>
       <div className="cloud cloud4"></div>
       <div className="cloud cloud5"></div>
+      <div className="cloud cloud6"></div>
+      <div className="cloud cloud7"></div>
+      <div className="cloud cloud8"></div>
+      <div className="cloud cloud9"></div>
+      <div className="cloud cloud10"></div>
       <header className="app-header">
         <div className="profile-icon" onClick={toggleProfile}>
           <User size={32} />
