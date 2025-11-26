@@ -22,8 +22,8 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
     icon: weather.weather?.[0]?.icon || '01d',
     humidity: weather.main?.humidity || 0,
     pressure: weather.main?.pressure || 0,
-    windSpeed: weather.wind?.speed || 0,
-    visibility: weather.visibility ? (weather.visibility / 1000).toFixed(1) : 'N/A',
+    windSpeed: Math.round(weather.wind?.speed || 0),
+    visibility: weather.visibility ? Math.round(weather.visibility / 1000) : 'N/A',
     clouds: weather.clouds?.all || 0
   };
 
@@ -125,15 +125,13 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
               const icon = item.weather[0].icon;
               const desc = item.weather[0].description;
               const humidity = item.main.humidity;
-              const windSpeed = item.wind.speed;
+              const windSpeed = Math.round(item.wind.speed);
+              const rain = item.rain ? Math.round(item.rain['3h'] || item.rain['1h'] || 0) : 0;
 
               return (
                 <div key={index} className="hourly-item">
                   <div className="hourly-time">
-                    {time.toLocaleTimeString('ko-KR', {
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}
+                    {time.getHours()}시
                   </div>
                   <img
                     src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
@@ -144,6 +142,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
                   <div className="hourly-details">
                     <span>💧 {humidity}%</span>
                     <span>💨 {windSpeed}m/s</span>
+                    {rain > 0 && <span>🌧️ {rain}mm</span>}
                   </div>
                   <div className="hourly-desc">{desc}</div>
                 </div>
@@ -187,11 +186,38 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
                 }
               }
 
-              return extendedForecasts.map((item, index) => {
-                const date = new Date(item.dt * 1000);
+              // 오늘 날짜 기준으로 다음 월요일부터 시작하는 7일 생성
+              const today = new Date();
+              const currentDay = today.getDay(); // 0(일) ~ 6(토)
+              const daysUntilMonday = currentDay === 0 ? 1 : (8 - currentDay) % 7 || 7;
+
+              // 다음 월요일부터 7일간의 예보 생성
+              const weekForecasts = [];
+              for (let i = 0; i < 7; i++) {
+                const targetDate = new Date(today);
+                targetDate.setDate(today.getDate() + daysUntilMonday + i);
+
+                // 해당 날짜에 가장 가까운 예보 데이터 찾기
+                const closestForecast = extendedForecasts.reduce((closest, forecast) => {
+                  const forecastDate = new Date(forecast.dt * 1000);
+                  const currentDiff = Math.abs(targetDate - forecastDate);
+                  const closestDiff = Math.abs(targetDate - new Date(closest.dt * 1000));
+                  return currentDiff < closestDiff ? forecast : closest;
+                }, extendedForecasts[0]);
+
+                weekForecasts.push({
+                  ...closestForecast,
+                  dt: Math.floor(targetDate.getTime() / 1000)
+                });
+              }
+
+              return weekForecasts.map((item, index) => {
                 const temp = Math.round(item.main.temp);
                 const icon = item.weather[0].icon;
                 const desc = item.weather[0].description;
+
+                // 요일 이름 배열 (월요일부터 시작)
+                const dayNames = ['월', '화', '수', '목', '금', '토', '일'];
 
                 return (
                   <div
@@ -201,7 +227,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
                     style={{ cursor: 'pointer' }}
                   >
                     <div className="forecast-day">
-                      {date.toLocaleDateString('ko-KR', { weekday: 'short' })}
+                      {dayNames[index]}
                     </div>
                     <img
                       src={`https://openweathermap.org/img/wn/${icon}@2x.png`}

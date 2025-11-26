@@ -9,7 +9,7 @@
   align-items: center;
 }
 
-/* Cloud styling */
+/* 구름 스타일링 */
 .clouds {
   position: absolute;
   width: 100%;
@@ -34,7 +34,7 @@
   border-radius: 100px;
 }
 
-/* Cloud 1 - Large cloud */
+/* 구름 애니메이션 - 5개 */
 .cloud1 {
   width: 200px;
   height: 60px;
@@ -57,7 +57,6 @@
   right: 30px;
 }
 
-/* Cloud 2 - Medium cloud */
 .cloud2 {
   width: 150px;
   height: 50px;
@@ -81,7 +80,6 @@
   right: 20px;
 }
 
-/* Cloud 3 - Small cloud */
 .cloud3 {
   width: 120px;
   height: 40px;
@@ -105,7 +103,6 @@
   right: 15px;
 }
 
-/* Cloud 4 - Large cloud */
 .cloud4 {
   width: 180px;
   height: 55px;
@@ -129,7 +126,6 @@
   right: 25px;
 }
 
-/* Cloud 5 - Medium cloud */
 .cloud5 {
   width: 140px;
   height: 45px;
@@ -153,158 +149,190 @@
   right: 18px;
 }
 
-/* Cloud animations */
+/* 구름 애니메이션 키프레임 */
 @keyframes moveCloud1 {
-  0% {
-    left: -200px;
-  }
-  100% {
-    left: 100%;
-  }
+  0% { left: -200px; }
+  100% { left: 100%; }
 }
 
 @keyframes moveCloud2 {
-  0% {
-    left: -150px;
-  }
-  100% {
-    left: 100%;
-  }
+  0% { left: -150px; }
+  100% { left: 100%; }
 }
 
 @keyframes moveCloud3 {
-  0% {
-    left: -120px;
-  }
-  100% {
-    left: 100%;
-  }
+  0% { left: -120px; }
+  100% { left: 100%; }
 }
 
 @keyframes moveCloud4 {
-  0% {
-    left: -180px;
-  }
-  100% {
-    left: 100%;
-  }
+  0% { left: -180px; }
+  100% { left: 100%; }
 }
 
 @keyframes moveCloud5 {
-  0% {
-    left: -140px;
-  }
-  100% {
-    left: 100%;
-  }
+  0% { left: -140px; }
+  100% { left: 100%; }
 }
 
-/* Login box styling */
+/* 로그인 박스 */
 .login-box {
   position: relative;
   z-index: 10;
   background: rgba(255, 255, 255, 0.95);
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  padding: var(--spacing-3xl);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
   backdrop-filter: blur(10px);
   min-width: 350px;
+  max-width: 420px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
 .login-box h1 {
-  margin: 0 0 30px 0;
+  margin: 0 0 var(--spacing-2xl) 0;
   text-align: center;
-  color: #333;
-  font-size: 32px;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
 }
 
+/* 로그인 폼 */
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--spacing-lg);
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--spacing-sm);
 }
 
 .input-group label {
-  color: #555;
-  font-size: 14px;
-  font-weight: 500;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  padding-left: var(--spacing-xs);
 }
 
 .input-group input {
-  padding: 12px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 0.3s;
+  padding: var(--spacing-md);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  transition: all var(--transition-fast);
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
 }
 
 .input-group input:focus {
   outline: none;
-  border-color: #87CEEB;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.1);
 }
 
+.input-group input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+/* 버튼 그룹 */
 .button-group {
   display: flex;
-  gap: 12px;
-  margin-top: 10px;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-md);
 }
 
 .login-button,
 .signup-button {
   flex: 1;
-  padding: 14px;
+  padding: var(--spacing-md) var(--spacing-lg);
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
 }
 
 .login-button {
-  background: linear-gradient(135deg, #87CEEB 0%, #5DADE2 100%);
+  background: var(--color-primary);
   color: white;
+  box-shadow: var(--shadow-sm);
 }
 
 .login-button:hover {
+  background: var(--color-primary-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(87, 206, 235, 0.4);
+  box-shadow: var(--shadow-md);
+}
+
+.login-button:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
 }
 
 .signup-button {
-  background: linear-gradient(135deg, #90EE90 0%, #32CD32 100%);
+  background: var(--color-success);
   color: white;
+  box-shadow: var(--shadow-sm);
 }
 
 .signup-button:hover {
+  background: #059669;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(50, 205, 50, 0.4);
+  box-shadow: var(--shadow-md);
 }
 
-.login-button:active,
 .signup-button:active {
   transform: translateY(0);
+  box-shadow: var(--shadow-sm);
 }
 
 .back-button {
   width: 100%;
-  padding: 14px;
-  background: #f0f0f0;
-  color: #666;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
   border: none;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all var(--transition-fast);
+  margin-top: var(--spacing-sm);
 }
 
 .back-button:hover {
-  background: #e0e0e0;
+  background: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+  transform: translateY(-1px);
+}
+
+.back-button:active {
+  transform: translateY(0);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 480px) {
+  .login-box {
+    min-width: 300px;
+    max-width: 90vw;
+    padding: var(--spacing-xl);
+  }
+
+  .login-box h1 {
+    font-size: var(--font-size-2xl);
+  }
+
+  .button-group {
+    flex-direction: column;
+  }
+
+  .login-button,
+  .signup-button {
+    width: 100%;
+  }
 }

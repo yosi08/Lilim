@@ -39,8 +39,8 @@ function Signup({ onBackToLogin }) {
             <input type="password" id="confirm-password" name="confirm-password" />
           </div>
 
-          <button type="submit" className="login-button">계정 만들기</button>
-          <button type="button" className="back-button" onClick={onBackToLogin}>로그인으로 돌아가기</button>
+          <button type="submit" className="signup-button">회원가입</button>
+          <button type="button" className="back-button" onClick={onBackToLogin}>돌아가기</button>
         </form>
       </div>
     </div>

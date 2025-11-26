@@ -1,40 +1,36 @@
 .weather-dashboard {
-  background: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s ease, color 0.3s ease;
+  background: var(--color-bg-primary);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-base);
   position: relative;
   z-index: 1;
 }
 
-.dark-mode .weather-dashboard {
-  background: #1e293b;
-  color: #e2e8f0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
 .weather-dashboard.loading {
   text-align: center;
-  padding: 3rem;
-  color: #999;
+  padding: var(--spacing-3xl);
+  color: var(--color-text-tertiary);
 }
 
+/* 메인 날씨 정보 */
 .weather-main {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-xl);
 }
 
 .weather-current {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
 }
 
 .weather-icon {
   width: 150px;
   height: 150px;
+  filter: drop-shadow(var(--shadow-sm));
 }
 
 .weather-temp {
@@ -42,109 +38,124 @@
 }
 
 .temp-value {
-  font-size: 4rem;
-  font-weight: 700;
-  color: #333;
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
   line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .temp-description {
-  font-size: 1.5rem;
-  color: #666;
+  font-size: var(--font-size-xl);
+  color: var(--color-text-secondary);
   text-transform: capitalize;
-  margin-top: 0.5rem;
+  margin-top: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
 }
 
 .temp-feels {
-  font-size: 1rem;
-  color: #999;
-  margin-top: 0.3rem;
+  font-size: var(--font-size-base);
+  color: var(--color-text-tertiary);
+  margin-top: var(--spacing-xs);
 }
 
+/* 날씨 상세 정보 */
 .weather-details {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 1rem;
+  gap: var(--spacing-md);
 }
 
 .detail-item {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 1rem;
-  background: #f9f9f9;
-  border-radius: 8px;
-  transition: transform 0.2s;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  border: 1px solid var(--color-border-light);
 }
 
 .detail-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--color-primary-lighter);
 }
 
 .detail-item svg {
-  color: #646cff;
+  color: var(--color-primary);
   flex-shrink: 0;
 }
 
 .detail-info {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: var(--spacing-xs);
 }
 
 .detail-label {
-  font-size: 0.75rem;
-  color: #999;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-tertiary);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
+  font-weight: var(--font-weight-medium);
 }
 
 .detail-value {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #333;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
 }
 
 .detail-value.aqi {
-  font-weight: 700;
+  font-weight: var(--font-weight-bold);
 }
 
+/* 날씨 예보 */
 .weather-forecast {
-  border-top: 1px solid #eee;
-  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
 }
 
 .weather-forecast h3 {
-  margin: 0 0 1rem 0;
-  color: #333;
+  margin: 0 0 var(--spacing-lg) 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
 }
 
 .forecast-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1rem;
+  gap: var(--spacing-md);
 }
 
 .forecast-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem;
-  background: #f9f9f9;
-  border-radius: 8px;
-  transition: all 0.2s;
+  padding: var(--spacing-lg);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  border: 2px solid transparent;
 }
 
 .forecast-item:hover {
-  background: #f0f4ff;
-  transform: translateY(-2px);
+  background: var(--color-bg-tertiary);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-sm);
 }
 
 .forecast-item.selected {
-  background: #646cff;
+  background: var(--color-primary);
   color: white;
   transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary-dark);
 }
 
 .forecast-item.selected .forecast-day,
@@ -154,34 +165,146 @@
 }
 
 .forecast-day {
-  font-weight: 600;
-  color: #646cff;
-  margin-bottom: 0.5rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-sm);
 }
 
 .forecast-icon {
   width: 60px;
   height: 60px;
-  margin: -10px 0;
+  margin: calc(var(--spacing-sm) * -1) 0;
 }
 
 .forecast-temp {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #333;
-  margin: 0.3rem 0;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: var(--spacing-xs) 0;
 }
 
 .forecast-desc {
-  font-size: 0.75rem;
-  color: #666;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
   text-align: center;
   text-transform: capitalize;
 }
 
+/* 시간별 날씨 */
+.hourly-weather {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+}
+
+.hourly-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.hourly-header h3 {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.close-btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--color-error);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-fast);
+}
+
+.close-btn:hover {
+  background: #dc2626;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.close-btn:active {
+  transform: translateY(0);
+}
+
+.hourly-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.hourly-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--spacing-md);
+  background: var(--color-bg-secondary);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-primary-lighter);
+  transition: all var(--transition-fast);
+}
+
+.hourly-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: var(--color-primary);
+}
+
+.hourly-time {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-base);
+}
+
+.hourly-icon {
+  width: 50px;
+  height: 50px;
+  margin: calc(var(--spacing-xs) * -1) 0;
+}
+
+.hourly-temp {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: var(--spacing-xs) 0;
+}
+
+.hourly-details {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-xs) 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.hourly-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  text-align: center;
+  text-transform: capitalize;
+  margin-top: var(--spacing-xs);
+}
+
+/* 스케줄 컨테이너 (날씨 대시보드 내부) */
+.weather-dashboard .schedule-container {
+  margin-top: var(--spacing-xl);
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--spacing-xl);
+}
+
+/* 반응형 디자인 */
 @media (max-width: 768px) {
   .weather-current {
     flex-direction: column;
+    gap: var(--spacing-lg);
   }
 
   .weather-temp {
@@ -189,173 +312,55 @@
   }
 
   .temp-value {
-    font-size: 3rem;
+    font-size: var(--font-size-3xl);
   }
 
   .weather-details {
     grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-sm);
   }
-}
 
-.dark-mode .temp-value,
-.dark-mode .temp-description,
-.dark-mode .detail-value,
-.dark-mode .forecast-temp {
-  color: #e2e8f0;
-}
+  .detail-item {
+    padding: var(--spacing-md);
+  }
 
-.dark-mode .detail-item {
-  background: #334155;
-}
+  .weather-icon {
+    width: 120px;
+    height: 120px;
+  }
 
-.dark-mode .forecast-item {
-  background: #334155;
-}
-
-.dark-mode .forecast-item:hover {
-  background: #475569;
-}
-
-.dark-mode .forecast-desc {
-  color: #cbd5e1;
-}
-
-.weather-dashboard .schedule-container {
-  margin-top: 2rem;
-  border-top: 1px solid #eee;
-  padding-top: 1.5rem;
-}
-
-/* Hourly Weather Styles */
-.hourly-weather {
-  border-top: 1px solid #eee;
-  padding-top: 1.5rem;
-  margin-bottom: 2rem;
-}
-
-.hourly-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.hourly-header h3 {
-  margin: 0;
-  color: #333;
-}
-
-.close-btn {
-  padding: 0.5rem 1rem;
-  background: #ff4444;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.2s;
-}
-
-.close-btn:hover {
-  background: #ff2222;
-}
-
-.hourly-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-}
-
-.hourly-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1rem;
-  background: #f0f4ff;
-  border-radius: 8px;
-  border: 2px solid #646cff;
-  transition: transform 0.2s;
-}
-
-.hourly-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(100, 108, 255, 0.2);
-}
-
-.hourly-time {
-  font-weight: 700;
-  color: #646cff;
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
-}
-
-.hourly-icon {
-  width: 70px;
-  height: 70px;
-  margin: -5px 0;
-}
-
-.hourly-temp {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #333;
-  margin: 0.3rem 0;
-}
-
-.hourly-details {
-  display: flex;
-  gap: 1rem;
-  margin: 0.5rem 0;
-  font-size: 0.9rem;
-  color: #666;
-}
-
-.hourly-desc {
-  font-size: 0.85rem;
-  color: #666;
-  text-align: center;
-  text-transform: capitalize;
-  margin-top: 0.3rem;
-}
-
-/* Dark mode for hourly weather */
-.dark-mode .hourly-weather {
-  border-top-color: #475569;
-}
-
-.dark-mode .hourly-header h3 {
-  color: #e2e8f0;
-}
-
-.dark-mode .hourly-item {
-  background: #334155;
-  border-color: #64748b;
-}
-
-.dark-mode .hourly-temp {
-  color: #e2e8f0;
-}
-
-.dark-mode .hourly-details,
-.dark-mode .hourly-desc {
-  color: #cbd5e1;
-}
-
-@media (max-width: 768px) {
   .hourly-list {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   }
 
   .hourly-item {
-    padding: 0.75rem;
+    padding: var(--spacing-sm);
   }
 
   .hourly-icon {
-    width: 50px;
-    height: 50px;
+    width: 45px;
+    height: 45px;
   }
 
   .hourly-temp {
-    font-size: 1.2rem;
+    font-size: var(--font-size-lg);
+  }
+
+  .forecast-list {
+    gap: var(--spacing-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .weather-dashboard {
+    padding: var(--spacing-lg);
+  }
+
+  .weather-details {
+    grid-template-columns: 1fr;
+  }
+
+  .hourly-list {
+    grid-template-columns: 1fr;
   }
 }
