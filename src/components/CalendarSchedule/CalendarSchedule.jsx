@@ -3,7 +3,7 @@ import Calendar from 'react-calendar';
 import { format } from 'date-fns';
 import { Plus, Trash2, Clock } from 'lucide-react';
 import 'react-calendar/dist/Calendar.css';
-import './CalendarSchedule.css';
+import '../css/CalendarSchedule.css';
 
 function CalendarSchedule({ onScheduleChange }) {
   const [selectedDate, setSelectedDate] = useState(new Date());

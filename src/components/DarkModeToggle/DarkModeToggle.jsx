@@ -1,5 +1,5 @@
 import { Moon, Sun } from 'lucide-react';
-import './DarkModeToggle.css';
+import '../css/DarkModeToggle.css';
 
 export default function DarkModeToggle({ darkMode, onToggle }) {
   return (

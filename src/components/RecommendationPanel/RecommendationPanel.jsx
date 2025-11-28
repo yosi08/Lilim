@@ -1,5 +1,5 @@
 import { Umbrella, Wind, Shirt, AlertTriangle, CheckCircle } from 'lucide-react';
-import './RecommendationPanel.css';
+import '../css/RecommendationPanel.css';
 
 export default function RecommendationPanel({ recommendations }) {
   if (!recommendations) {

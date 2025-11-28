@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
 import { weatherService } from './services/weatherService';
 import { aiService } from './services/aiService';
-import WeatherDashboard from './components/WeatherDashboard';
-import CalendarSchedule from './components/CalendarSchedule';
-import NotificationPanel from './components/NotificationPanel';
-import RecommendationPanel from './components/RecommendationPanel';
-import DarkModeToggle from './components/DarkModeToggle';
-import Login from './components/Login';
-import Signup from './components/Signup';
-import Settings from './components/Settings';
+import WeatherDashboard from './components/WeatherDashboard/WeatherDashboard.jsx';
+import CalendarSchedule from './components/CalendarSchedule/CalendarSchedule.jsx';
+import NotificationPanel from './components/NotificationPanel/NotificationPanel.jsx';
+import RecommendationPanel from './components/RecommendationPanel/RecommendationPanel.jsx';
+import DarkModeToggle from './components/DarkModeToggle/DarkModeToggle.jsx';
+import Login from './components/Login/Login.jsx';
+import Signup from './components/Signup/Signup.jsx';
+import Settings from './components/Settings/Settings.jsx';
 import { CloudSun, User, Settings as SettingsIcon } from 'lucide-react';
 import './App.css';
 

@@ -1,11 +1,61 @@
 import { useState, useEffect } from 'react';
-import { Cloud, Droplets, Wind, Eye, Gauge, CloudRain } from 'lucide-react';
-import { ScheduleContainer } from './CalendarSchedule';
-import './WeatherDashboard.css';
+import {
+  Cloud,
+  Droplets,
+  Wind,
+  Eye,
+  Gauge,
+  CloudRain,
+  Sun,
+  CloudSun,
+  CloudDrizzle,
+  CloudSnow,
+  CloudLightning,
+  CloudFog,
+  Moon,
+  CloudMoon
+} from 'lucide-react';
+import { ScheduleContainer } from '../CalendarSchedule/CalendarSchedule';
+import '../css/WeatherDashboard.css';
 
 export default function WeatherDashboard({ weather, forecast, airQuality }) {
   const [selectedDay, setSelectedDay] = useState(null);
   const [hourlyWeather, setHourlyWeather] = useState([]);
+
+  // 날씨 코드에 따른 아이콘 매핑
+  const getWeatherIcon = (iconCode, size = 80) => {
+    const iconProps = {
+      size,
+      strokeWidth: 1.5,
+      className: 'weather-icon-svg'
+    };
+
+    // OpenWeatherMap 아이콘 코드 분석
+    const code = iconCode?.substring(0, 2);
+    const isNight = iconCode?.endsWith('n');
+
+    switch (code) {
+      case '01': // Clear sky
+        return isNight ? <Moon {...iconProps} /> : <Sun {...iconProps} />;
+      case '02': // Few clouds
+        return isNight ? <CloudMoon {...iconProps} /> : <CloudSun {...iconProps} />;
+      case '03': // Scattered clouds
+      case '04': // Broken clouds
+        return <Cloud {...iconProps} />;
+      case '09': // Shower rain
+        return <CloudDrizzle {...iconProps} />;
+      case '10': // Rain
+        return <CloudRain {...iconProps} />;
+      case '11': // Thunderstorm
+        return <CloudLightning {...iconProps} />;
+      case '13': // Snow
+        return <CloudSnow {...iconProps} />;
+      case '50': // Mist/Fog
+        return <CloudFog {...iconProps} />;
+      default:
+        return <CloudSun {...iconProps} />;
+    }
+  };
 
   if (!weather) {
     return (
@@ -55,15 +105,13 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
     <div className="weather-dashboard">
       <div className="weather-main">
         <div className="weather-current">
-          <img
-            src={`https://openweathermap.org/img/wn/${current.icon}@4x.png`}
-            alt={current.description}
-            className="weather-icon"
-          />
+          <div className="weather-icon">
+            {getWeatherIcon(current.icon, 120)}
+          </div>
           <div className="weather-temp">
             <div className="temp-value">{current.temp}°C</div>
             <div className="temp-description">{current.description}</div>
-            <div className="temp-feels">다음과 같은 느낌{current.feelsLike}°C</div>
+            <div className="temp-feels">다음과 같은 느낌 {current.feelsLike}°C</div>
           </div>
         </div>
 
@@ -133,16 +181,14 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
                   <div className="hourly-time">
                     {time.getHours()}시
                   </div>
-                  <img
-                    src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
-                    alt={desc}
-                    className="hourly-icon"
-                  />
+                  <div className="hourly-icon">
+                    {getWeatherIcon(icon, 40)}
+                  </div>
                   <div className="hourly-temp">{temp}°C</div>
                   <div className="hourly-details">
-                    <span>💧 {humidity}%</span>
-                    <span>💨 {windSpeed}m/s</span>
-                    {rain > 0 && <span>🌧️ {rain}mm</span>}
+                    <span><Droplets size={12} /> {humidity}%</span>
+                    <span><Wind size={12} /> {windSpeed}m/s</span>
+                    {rain > 0 && <span><CloudRain size={12} /> {rain}mm</span>}
                   </div>
                   <div className="hourly-desc">{desc}</div>
                 </div>
@@ -229,11 +275,9 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
                     <div className="forecast-day">
                       {dayNames[index]}
                     </div>
-                    <img
-                      src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
-                      alt={desc}
-                      className="forecast-icon"
-                    />
+                    <div className="forecast-icon">
+                      {getWeatherIcon(icon, 48)}
+                    </div>
                     <div className="forecast-temp">{temp}°C</div>
                     <div className="forecast-desc">{desc}</div>
                   </div>

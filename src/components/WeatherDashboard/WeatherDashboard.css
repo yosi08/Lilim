@@ -30,7 +30,25 @@
 .weather-icon {
   width: 150px;
   height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   filter: drop-shadow(var(--shadow-sm));
+}
+
+.weather-icon-svg {
+  color: var(--color-primary);
+  filter: drop-shadow(0 2px 8px rgba(100, 108, 255, 0.3));
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .weather-temp {
@@ -175,6 +193,18 @@
   width: 60px;
   height: 60px;
   margin: calc(var(--spacing-sm) * -1) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forecast-icon .weather-icon-svg {
+  color: var(--color-primary);
+  transition: all var(--transition-fast);
+}
+
+.forecast-item.selected .forecast-icon .weather-icon-svg {
+  color: white;
 }
 
 .forecast-temp {
@@ -268,6 +298,13 @@
   width: 50px;
   height: 50px;
   margin: calc(var(--spacing-xs) * -1) 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hourly-icon .weather-icon-svg {
+  color: var(--color-primary);
 }
 
 .hourly-temp {
@@ -283,6 +320,17 @@
   margin: var(--spacing-xs) 0;
   font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
+}
+
+.hourly-details span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.hourly-details svg {
+  color: var(--color-primary-light);
+  flex-shrink: 0;
 }
 
 .hourly-desc {

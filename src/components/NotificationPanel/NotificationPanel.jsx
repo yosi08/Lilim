@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Bell, BellOff, Check, Send } from 'lucide-react';
-import './NotificationPanel.css';
-import { webhookService } from '../services/webhookService';
+import '../css/NotificationPanel.css';
+import { webhookService } from '../../services/webhookService';
 
 export default function NotificationPanel({ recommendations, weather }) {
   const [notifications, setNotifications] = useState([]);
