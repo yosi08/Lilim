@@ -1,6 +1,6 @@
 import { X, User, Bell, Moon, Globe, Shield, Webhook } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import '../css/Settings.css';
+import './Settings.css';
 
 function Settings({ onClose, darkMode, onDarkModeToggle }) {
   const [webhookUrl, setWebhookUrl] = useState('');

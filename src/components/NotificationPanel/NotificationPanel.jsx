@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Bell, BellOff, Check, Send } from 'lucide-react';
-import '../css/NotificationPanel.css';
+import './NotificationPanel.css';
 import { webhookService } from '../../services/webhookService';
 
 export default function NotificationPanel({ recommendations, weather }) {
@@ -27,7 +27,7 @@ export default function NotificationPanel({ recommendations, weather }) {
     if (recommendations.alerts && recommendations.alerts.length > 0) {
       recommendations.alerts.forEach((alert, idx) => {
         newNotifications.push({
-          id: `alert-${idx}-${Date.now()}`,
+          id: `alert-${idx}-${crypto.randomUUID()}`,
           type: 'alert',
           message: alert,
           timestamp: new Date(),
@@ -38,7 +38,7 @@ export default function NotificationPanel({ recommendations, weather }) {
 
     if (recommendations.items && recommendations.items.length > 0) {
       newNotifications.push({
-        id: `items-${Date.now()}`,
+        id: `items-${crypto.randomUUID()}`,
         type: 'reminder',
         message: `Don't forget: ${recommendations.items.join(', ')}`,
         timestamp: new Date(),

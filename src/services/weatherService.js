@@ -20,7 +20,7 @@ const MOCK_WEATHER = {
   visibility: 10000,
   wind: { speed: 4.5, deg: 270 },
   clouds: { all: 60 },
-  dt: Date.now() / 1000,
+  dt: Math.floor(Date.now() / 1000),
   sys: { country: 'US', sunrise: 1697544000, sunset: 1697587200 },
   timezone: -25200,
   id: 5391959,
@@ -33,7 +33,7 @@ const MOCK_FORECAST = {
   message: 0,
   cnt: 56,
   list: Array.from({ length: 56 }, (_, i) => ({
-    dt: Date.now() / 1000 + i * 10800,
+    dt: Math.floor(Date.now() / 1000) + i * 10800,
     main: {
       temp: 18 + Math.sin(i / 3) * 5,
       feels_like: 17 + Math.sin(i / 3) * 5,
@@ -73,7 +73,7 @@ const MOCK_AIR_QUALITY = {
         pm10: 20,
         nh3: 1
       },
-      dt: Date.now() / 1000
+      dt: Math.floor(Date.now() / 1000)
     }
   ]
 };

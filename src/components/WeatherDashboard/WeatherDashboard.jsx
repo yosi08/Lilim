@@ -16,7 +16,7 @@ import {
   CloudMoon
 } from 'lucide-react';
 import { ScheduleContainer } from '../CalendarSchedule/CalendarSchedule';
-import '../css/WeatherDashboard.css';
+import './WeatherDashboard.css';
 
 export default function WeatherDashboard({ weather, forecast, airQuality }) {
   const [selectedDay, setSelectedDay] = useState(null);

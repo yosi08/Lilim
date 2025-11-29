@@ -1,4 +1,4 @@
-import '../css/Login.css';
+import './Login.css';
 
 function Login({ onSignupClick, onLoginSuccess }) {
   const handleSubmit = (e) => {
