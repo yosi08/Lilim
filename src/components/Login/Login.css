@@ -3,27 +3,19 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: linear-gradient(to bottom, #87CEEB 0%, #E0F6FF 100%);
+  background: linear-gradient(to bottom, #e0f2fe 0%, #f0f9ff 50%, #ffffff 100%);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* 구름 스타일링 */
+/* 구름 스타일링 - 숨김 */
 .clouds {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  overflow: hidden;
+  display: none;
 }
 
 .cloud {
-  position: absolute;
-  background: white;
-  border-radius: 100px;
-  opacity: 0.8;
+  display: none;
 }
 
 .cloud::before,
@@ -179,22 +171,41 @@
 .login-box {
   position: relative;
   z-index: 10;
-  background: rgba(255, 255, 255, 0.95);
+  background: #ffffff;
   padding: var(--spacing-3xl);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-xl);
-  backdrop-filter: blur(10px);
-  min-width: 350px;
-  max-width: 420px;
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+  min-width: 400px;
+  max-width: 450px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all var(--transition-base);
+}
+
+.login-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .login-box h1 {
-  margin: 0 0 var(--spacing-2xl) 0;
+  margin: 0 0 var(--spacing-3xl) 0;
   text-align: center;
-  color: var(--color-text-primary);
-  font-size: var(--font-size-3xl);
+  color: var(--color-primary);
+  font-size: 2.5rem;
   font-weight: var(--font-weight-bold);
+  position: relative;
+  padding-bottom: var(--spacing-lg);
+}
+
+.login-box h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  border-radius: var(--radius-full);
 }
 
 /* 로그인 폼 */
@@ -218,19 +229,22 @@
 }
 
 .input-group input {
-  padding: var(--spacing-md);
-  border: 2px solid var(--color-border);
-  border-radius: var(--radius-md);
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-lg);
   font-size: var(--font-size-base);
   transition: all var(--transition-fast);
-  background: var(--color-bg-primary);
+  background: rgba(255, 255, 255, 0.8);
   color: var(--color-text-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .input-group input:focus {
   outline: none;
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(100, 108, 255, 0.1);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15), 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-1px);
 }
 
 .input-group input::placeholder {
@@ -247,72 +261,77 @@
 .login-button,
 .signup-button {
   flex: 1;
-  padding: var(--spacing-md) var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-xl);
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
   cursor: pointer;
   transition: all var(--transition-fast);
   white-space: nowrap;
+  position: relative;
+  overflow: hidden;
 }
 
 .login-button {
-  background: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
   color: white;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
 }
 
 .login-button:hover {
-  background: var(--color-primary-dark);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary-darker) 100%);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
 }
 
 .login-button:active {
   transform: translateY(0);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
 }
 
 .signup-button {
-  background: var(--color-success);
+  background: linear-gradient(135deg, var(--color-success) 0%, #059669 100%);
   color: white;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
 .signup-button:hover {
-  background: #059669;
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
 }
 
 .signup-button:active {
   transform: translateY(0);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
 }
 
 .back-button {
   width: 100%;
   padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--color-bg-tertiary);
+  background: rgba(0, 0, 0, 0.05);
   color: var(--color-text-secondary);
-  border: none;
-  border-radius: var(--radius-md);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: var(--radius-lg);
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-semibold);
   cursor: pointer;
   transition: all var(--transition-fast);
-  margin-top: var(--spacing-sm);
+  margin-top: var(--spacing-md);
 }
 
 .back-button:hover {
-  background: var(--color-bg-secondary);
+  background: rgba(0, 0, 0, 0.08);
   color: var(--color-text-primary);
-  transform: translateY(-1px);
+  border-color: rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .back-button:active {
   transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* 반응형 디자인 */

@@ -1,55 +1,20 @@
 /* 앱 메인 컨테이너 */
 .app {
   min-height: 100vh;
-  background: linear-gradient(135deg, #87CEEB 0%, #4A90E2 100%);
-  padding: var(--spacing-xl);
+  background: linear-gradient(to bottom, #e0f2fe 0%, #f0f9ff 50%, #ffffff 100%);
+  padding: var(--spacing-2xl);
   transition: background var(--transition-base);
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 .app.dark-mode {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background: linear-gradient(to bottom, #0f172a 0%, #1e293b 100%);
 }
 
-/* 태양/달 스타일링 */
+/* 태양/달 스타일링 - 숨김 */
 .app .sun {
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  background: radial-gradient(circle, #FFD700 0%, #FFA500 70%);
-  border-radius: var(--radius-full);
-  top: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 0;
-  pointer-events: none;
-  box-shadow:
-    0 0 40px rgba(255, 215, 0, 0.6),
-    0 0 80px rgba(255, 215, 0, 0.4),
-    0 0 120px rgba(255, 215, 0, 0.2);
-  animation: sunGlow 4s ease-in-out infinite;
-}
-
-.app .sun::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  background: inherit;
-  border-radius: var(--radius-full);
-  animation: sunPulse 3s ease-in-out infinite;
-}
-
-.app.dark-mode .sun {
-  background: radial-gradient(circle, #F4F6F9 0%, #E0E5EC 70%);
-  box-shadow:
-    0 0 30px rgba(244, 246, 249, 0.5),
-    0 0 60px rgba(244, 246, 249, 0.3),
-    0 0 90px rgba(244, 246, 249, 0.1);
+  display: none;
 }
 
 /* 태양 애니메이션 */
@@ -79,29 +44,9 @@
   }
 }
 
-/* 구름 스타일링 */
+/* 구름 스타일링 - 숨김 */
 .app .cloud {
-  position: absolute;
-  background: white;
-  border-radius: 100px;
-  opacity: 0.7;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.app .cloud::before,
-.app .cloud::after {
-  content: '';
-  position: absolute;
-  background: white;
-  border-radius: 100px;
-}
-
-.app.dark-mode .cloud,
-.app.dark-mode .cloud::before,
-.app.dark-mode .cloud::after {
-  background: rgba(255, 255, 255, 0.15);
-  opacity: 0.5;
+  display: none;
 }
 
 /* 구름 애니메이션 - 10개 */
@@ -405,8 +350,8 @@
 
 /* 프로필 아이콘 */
 .profile-icon {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: var(--radius-full);
   display: flex;
@@ -414,20 +359,23 @@
   justify-content: center;
   cursor: pointer;
   transition: all var(--transition-fast);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   position: relative;
   z-index: 3000;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: var(--shadow-md);
 }
 
 .profile-icon:hover {
   background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.05);
-  box-shadow: var(--shadow-sm);
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(255, 255, 255, 0.6);
 }
 
 .profile-icon:active {
-  transform: scale(1);
+  transform: scale(1.05);
 }
 
 /* 헤더 콘텐츠 */
@@ -458,16 +406,18 @@
 /* 프로필 패널 */
 .profile-panel {
   position: absolute;
-  top: 60px;
+  top: 70px;
   left: 0;
-  background: var(--color-bg-primary);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-xl);
-  padding: var(--spacing-xl);
-  min-width: 280px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--backdrop-blur);
+  -webkit-backdrop-filter: var(--backdrop-blur);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-2xl);
+  padding: var(--spacing-2xl);
+  min-width: 300px;
   z-index: 3000;
   animation: slideDown var(--transition-base) ease;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--glass-border);
 }
 
 @keyframes slideDown {
@@ -591,8 +541,8 @@
 .main-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: var(--spacing-xl);
-  margin-bottom: var(--spacing-xl);
+  gap: var(--spacing-2xl);
+  margin-bottom: var(--spacing-2xl);
 }
 
 .weather-section,

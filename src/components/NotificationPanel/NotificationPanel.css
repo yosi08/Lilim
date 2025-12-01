@@ -1,10 +1,22 @@
 .notification-panel {
-  background: white;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  border-radius: 16px;
+  padding: var(--spacing-2xl);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   max-width: 500px;
   margin: 0 auto;
+  transition: all var(--transition-base);
+}
+
+.notification-panel:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+body.dark-mode .notification-panel {
+  background: #1e293b;
+  border-color: rgba(255, 255, 255, 0.05);
 }
 
 .notification-header {
@@ -78,7 +90,7 @@
 }
 
 .toggle-btn.enabled {
-  background: #646cff;
+  background: var(--color-primary);
   color: white;
 }
 
@@ -116,24 +128,43 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding: 0.75rem;
-  border-radius: 4px;
-  transition: all 0.2s;
+  padding: var(--spacing-md);
+  border-radius: 12px;
+  transition: all var(--transition-fast);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  border: 1px solid transparent;
 }
 
 .notification-item.unread {
-  background: #f0f4ff;
-  border-left: 3px solid #646cff;
+  background: #eff6ff;
+  border-left: 4px solid var(--color-primary);
+  border-color: #dbeafe;
 }
 
 .notification-item.read {
-  background: #f9f9f9;
-  border-left: 3px solid transparent;
+  background: #f9fafb;
+  border-left: 4px solid transparent;
   opacity: 0.7;
+  border-color: #f3f4f6;
 }
 
 .notification-item.alert {
-  border-left-color: #ff4444;
+  border-left-color: var(--color-error);
+}
+
+.notification-item:hover {
+  transform: translateX(2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode .notification-item.unread {
+  background: #1e3a5f;
+  border-color: #1e40af;
+}
+
+body.dark-mode .notification-item.read {
+  background: #0f172a;
+  border-color: #1e293b;
 }
 
 .notification-content {
@@ -153,17 +184,18 @@
 }
 
 .mark-read-btn {
-  padding: 0.3rem;
+  padding: var(--spacing-xs);
   background: transparent;
   border: none;
-  color: #646cff;
+  color: var(--color-primary);
   cursor: pointer;
-  border-radius: 4px;
-  transition: background 0.2s;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
 }
 
 .mark-read-btn:hover {
-  background: #e0e4ff;
+  background: rgba(37, 99, 235, 0.1);
+  transform: scale(1.1);
 }
 
 .no-notifications {

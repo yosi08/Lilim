@@ -172,7 +172,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
               const temp = Math.round(item.main.temp);
               const icon = item.weather[0].icon;
               const desc = item.weather[0].description;
-              const humidity = item.main.humidity;
+              const humidity = Math.round(item.main.humidity);
               const windSpeed = Math.round(item.wind.speed);
               const rain = item.rain ? Math.round(item.rain['3h'] || item.rain['1h'] || 0) : 0;
 

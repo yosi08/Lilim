@@ -81,7 +81,7 @@
   justify-content: space-between;
   padding: 1.5rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  background: linear-gradient(135deg, #4A90E2 0%, #87CEEB 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
   color: white;
   gap: 1rem;
 }
@@ -204,28 +204,28 @@
   width: 24px;
   height: 24px;
   padding: 8px;
-  background: linear-gradient(135deg, #4A90E2 0%, #87CEEB 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
   color: white;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
 .dark-mode .section-header svg {
-  background: linear-gradient(135deg, #5b9fd8 0%, #7ec8e3 100%);
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary-lighter) 100%);
 }
 
 .section-header h3 {
   margin: 0;
   font-size: 1.2rem;
   font-weight: 700;
-  background: linear-gradient(135deg, #4A90E2 0%, #87CEEB 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .dark-mode .section-header h3 {
-  background: linear-gradient(135deg, #87CEEB 0%, #B0E0E6 100%);
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary-lighter) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -410,8 +410,8 @@
 }
 
 .toggle-switch input:checked + .toggle-slider {
-  background: linear-gradient(135deg, #4A90E2 0%, #87CEEB 100%);
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 0 12px rgba(74, 144, 226, 0.4);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15), 0 0 12px rgba(37, 99, 235, 0.4);
 }
 
 .toggle-switch input:checked + .toggle-slider:before {
@@ -426,7 +426,7 @@
 .save-btn {
   width: 100%;
   padding: 1rem;
-  background: linear-gradient(135deg, #4A90E2 0%, #87CEEB 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
   color: white;
   border: none;
   border-radius: 12px;
@@ -435,7 +435,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 1rem;
-  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.25);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -457,12 +457,12 @@
 
 .save-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(74, 144, 226, 0.5);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
 }
 
 .save-btn:active {
   transform: translateY(-1px);
-  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.3);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
 .danger-btn {
