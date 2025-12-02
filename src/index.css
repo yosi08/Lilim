@@ -70,11 +70,11 @@
   --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.18);
   --shadow-2xl: 0 20px 48px rgba(0, 0, 0, 0.22);
 
-  /* Glassmorphism 효과 */
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.3);
+  /* Glassmorphism 효과 - 강화된 블러와 깊이감 */
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.4);
   --glass-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
-  --backdrop-blur: blur(12px);
+  --backdrop-blur: blur(20px) saturate(180%);
 
   /* 둥근 모서리 */
   --radius-sm: 0.375rem;  /* 6px */
@@ -112,11 +112,11 @@ body.dark-mode {
   --shadow-xl: 0 12px 32px rgba(0, 0, 0, 0.45);
   --shadow-2xl: 0 20px 48px rgba(0, 0, 0, 0.5);
 
-  /* 다크모드 Glassmorphism */
-  --glass-bg: rgba(30, 41, 59, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  --backdrop-blur: blur(16px);
+  /* 다크모드 Glassmorphism - 강화된 효과 */
+  --glass-bg: rgba(30, 41, 59, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --backdrop-blur: blur(24px) saturate(150%);
 }
 
 /* 기본 요소 스타일 */
