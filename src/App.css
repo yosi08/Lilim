@@ -4,16 +4,20 @@
   background:
     /* 노이즈 텍스처 레이어 */
     url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E"),
-    /* 방사형 그라데이션 (태양광 효과) */
-    radial-gradient(ellipse at 50% 20%, rgba(255, 248, 220, 0.4) 0%, transparent 50%),
-    /* 메인 하늘 그라데이션 */
+    /* 태양 방사형 그라데이션 */
+    radial-gradient(ellipse at 50% 15%, rgba(255, 237, 160, 0.5) 0%, rgba(255, 248, 220, 0.3) 20%, transparent 45%),
+    /* 부드러운 구름 레이어 */
+    radial-gradient(ellipse at 80% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 40%),
+    radial-gradient(ellipse at 20% 40%, rgba(255, 255, 255, 0.25) 0%, transparent 35%),
+    /* 메인 하늘 그라데이션 - 더 현실적인 색상 */
     linear-gradient(to bottom,
-      #87ceeb 0%,      /* 밝은 하늘색 */
-      #a8d8f0 20%,     /* 중간 밝은 하늘 */
-      #d4ebf7 40%,     /* 연한 하늘 */
-      #e8f4f8 60%,     /* 지평선 위 */
-      #f5f9fb 80%,     /* 지평선 근처 */
-      #ffffff 100%     /* 땅/바닥 */
+      #4a9fd8 0%,      /* 깊은 하늘색 */
+      #6eb3e0 15%,     /* 밝은 하늘색 */
+      #8dc5ea 30%,     /* 중간 하늘색 */
+      #b8dcf3 50%,     /* 연한 하늘색 */
+      #d8ebf8 70%,     /* 지평선 위 */
+      #edf5fa 85%,     /* 지평선 근처 */
+      #f8fbfd 100%     /* 땅/바닥 */
     );
   padding: var(--spacing-2xl);
   transition: background var(--transition-base);
@@ -46,20 +50,24 @@
     /* 다크모드 노이즈 텍스처 */
     url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"),
     /* 달빛 효과 */
-    radial-gradient(ellipse at 80% 10%, rgba(147, 197, 253, 0.15) 0%, transparent 40%),
+    radial-gradient(ellipse at 85% 12%, rgba(147, 197, 253, 0.2) 0%, rgba(147, 197, 253, 0.08) 25%, transparent 45%),
+    /* 은하수 효과 */
+    radial-gradient(ellipse at 50% 50%, rgba(88, 101, 242, 0.05) 0%, transparent 50%),
     /* 별빛 효과 */
-    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 10%),
-    radial-gradient(circle at 70% 50%, rgba(255, 255, 255, 0.02) 0%, transparent 8%),
-    radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.025) 0%, transparent 12%),
-    /* 메인 밤하늘 그라데이션 */
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 8%),
+    radial-gradient(circle at 75% 35%, rgba(255, 255, 255, 0.03) 0%, transparent 6%),
+    radial-gradient(circle at 35% 60%, rgba(255, 255, 255, 0.035) 0%, transparent 9%),
+    radial-gradient(circle at 90% 75%, rgba(255, 255, 255, 0.025) 0%, transparent 7%),
+    /* 메인 밤하늘 그라데이션 - 더 깊고 현실적인 색상 */
     linear-gradient(to bottom,
-      #0a0e27 0%,      /* 깊은 밤하늘 */
-      #0f172a 25%,     /* 진한 밤하늘 */
-      #1a1f3a 50%,     /* 중간 밤하늘 */
-      #1e293b 75%,     /* 지평선 위 */
+      #050a1e 0%,      /* 가장 깊은 밤하늘 */
+      #0c1428 20%,     /* 깊은 밤하늘 */
+      #0f172a 40%,     /* 진한 밤하늘 */
+      #1a1f3a 60%,     /* 중간 밤하늘 */
+      #1e293b 80%,     /* 지평선 위 */
       #27374d 100%     /* 지평선 */
     );
-  filter: contrast(1.05);
+  filter: contrast(1.08) brightness(0.98);
 }
 
 .app.dark-mode::before {
@@ -103,297 +111,461 @@
   }
 }
 
-/* 구름 스타일링 - 숨김 */
+/* 구름 스타일링 - 자연스럽고 현실적인 구름 */
 .app .cloud {
-  display: none;
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform;
+  filter: blur(2px);
+  opacity: 0.6;
+}
+
+/* 구름 메인 바디 */
+.app .cloud::before {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow:
+    0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(255, 255, 255, 0.3);
+}
+
+/* 구름 왼쪽 부분 */
+.app .cloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+}
+
+/* 다크모드 구름 - 더 어둡고 신비로운 느낌 */
+.app.dark-mode .cloud {
+  opacity: 0.3;
+  filter: blur(3px);
+}
+
+.app.dark-mode .cloud::before {
+  background: rgba(200, 220, 240, 0.3);
+  box-shadow:
+    0 0 25px rgba(200, 220, 240, 0.2),
+    0 0 50px rgba(200, 220, 240, 0.1);
+}
+
+.app.dark-mode .cloud::after {
+  background: rgba(180, 200, 220, 0.25);
+  box-shadow: 0 0 20px rgba(180, 200, 220, 0.15);
 }
 
 /* 구름 애니메이션 - 10개 */
 .app .cloud1 {
-  width: 200px;
-  height: 60px;
-  top: 20%;
-  left: -200px;
-  animation: moveCloud1 25s linear infinite;
+  width: 120px;
+  height: 120px;
+  top: 15%;
+  left: -150px;
+  animation: moveCloud1 50s linear infinite;
 }
 
 .app .cloud1::before {
-  width: 80px;
-  height: 80px;
-  top: -40px;
-  left: 30px;
+  width: 120px;
+  height: 120px;
+  top: 0;
+  left: 0;
 }
 
 .app .cloud1::after {
-  width: 100px;
-  height: 100px;
-  top: -50px;
-  right: 30px;
+  width: 80px;
+  height: 80px;
+  top: 20px;
+  left: 70px;
 }
 
 .app .cloud2 {
-  width: 150px;
-  height: 50px;
-  top: 40%;
-  left: -150px;
-  animation: moveCloud2 30s linear infinite;
-  animation-delay: 5s;
+  width: 100px;
+  height: 100px;
+  top: 35%;
+  left: -120px;
+  animation: moveCloud2 45s linear infinite;
+  animation-delay: 8s;
 }
 
 .app .cloud2::before {
-  width: 60px;
-  height: 60px;
-  top: -30px;
-  left: 20px;
+  width: 100px;
+  height: 100px;
+  top: 0;
+  left: 0;
 }
 
 .app .cloud2::after {
   width: 70px;
   height: 70px;
-  top: -35px;
-  right: 20px;
+  top: 15px;
+  left: 60px;
 }
 
 .app .cloud3 {
-  width: 120px;
-  height: 40px;
-  top: 60%;
-  left: -120px;
-  animation: moveCloud3 20s linear infinite;
-  animation-delay: 10s;
-}
-
-.app .cloud3::before {
-  width: 50px;
-  height: 50px;
-  top: -25px;
-  left: 15px;
-}
-
-.app .cloud3::after {
-  width: 60px;
-  height: 60px;
-  top: -30px;
-  right: 15px;
-}
-
-.app .cloud4 {
-  width: 180px;
-  height: 55px;
-  top: 15%;
-  left: -180px;
-  animation: moveCloud4 35s linear infinite;
+  width: 140px;
+  height: 140px;
+  top: 55%;
+  left: -160px;
+  animation: moveCloud3 55s linear infinite;
   animation-delay: 15s;
 }
 
+.app .cloud3::before {
+  width: 140px;
+  height: 140px;
+  top: 0;
+  left: 0;
+}
+
+.app .cloud3::after {
+  width: 90px;
+  height: 90px;
+  top: 25px;
+  left: 80px;
+}
+
+.app .cloud4 {
+  width: 110px;
+  height: 110px;
+  top: 20%;
+  left: -130px;
+  animation: moveCloud4 48s linear infinite;
+  animation-delay: 22s;
+}
+
 .app .cloud4::before {
-  width: 70px;
-  height: 70px;
-  top: -35px;
-  left: 25px;
+  width: 110px;
+  height: 110px;
+  top: 0;
+  left: 0;
 }
 
 .app .cloud4::after {
-  width: 90px;
-  height: 90px;
-  top: -45px;
-  right: 25px;
+  width: 75px;
+  height: 75px;
+  top: 18px;
+  left: 65px;
 }
 
 .app .cloud5 {
-  width: 140px;
-  height: 45px;
-  top: 50%;
-  left: -140px;
-  animation: moveCloud5 28s linear infinite;
-  animation-delay: 7s;
+  width: 130px;
+  height: 130px;
+  top: 45%;
+  left: -150px;
+  animation: moveCloud5 52s linear infinite;
+  animation-delay: 10s;
 }
 
 .app .cloud5::before {
-  width: 55px;
-  height: 55px;
-  top: -28px;
-  left: 18px;
+  width: 130px;
+  height: 130px;
+  top: 0;
+  left: 0;
 }
 
 .app .cloud5::after {
-  width: 65px;
-  height: 65px;
-  top: -32px;
-  right: 18px;
+  width: 85px;
+  height: 85px;
+  top: 22px;
+  left: 75px;
 }
 
 .app .cloud6 {
-  width: 130px;
-  height: 42px;
-  top: 35%;
-  left: -130px;
-  animation: moveCloud6 24s linear infinite;
-  animation-delay: 3s;
+  width: 95px;
+  height: 95px;
+  top: 30%;
+  left: -110px;
+  animation: moveCloud6 42s linear infinite;
+  animation-delay: 5s;
 }
 
 .app .cloud6::before {
-  width: 52px;
-  height: 52px;
-  top: -26px;
-  left: 17px;
+  width: 95px;
+  height: 95px;
+  top: 0;
+  left: 0;
 }
 
 .app .cloud6::after {
-  width: 62px;
-  height: 62px;
-  top: -31px;
-  right: 17px;
+  width: 65px;
+  height: 65px;
+  top: 15px;
+  left: 55px;
 }
 
 .app .cloud7 {
-  width: 190px;
-  height: 58px;
+  width: 150px;
+  height: 150px;
   top: 25%;
-  left: -190px;
-  animation: moveCloud7 32s linear infinite;
-  animation-delay: 12s;
-}
-
-.app .cloud7::before {
-  width: 75px;
-  height: 75px;
-  top: -38px;
-  left: 28px;
-}
-
-.app .cloud7::after {
-  width: 95px;
-  height: 95px;
-  top: -48px;
-  right: 28px;
-}
-
-.app .cloud8 {
-  width: 155px;
-  height: 48px;
-  top: 55%;
-  left: -155px;
-  animation: moveCloud8 26s linear infinite;
-  animation-delay: 9s;
-}
-
-.app .cloud8::before {
-  width: 62px;
-  height: 62px;
-  top: -31px;
-  left: 22px;
-}
-
-.app .cloud8::after {
-  width: 72px;
-  height: 72px;
-  top: -36px;
-  right: 22px;
-}
-
-.app .cloud9 {
-  width: 110px;
-  height: 38px;
-  top: 45%;
-  left: -110px;
-  animation: moveCloud9 22s linear infinite;
-  animation-delay: 14s;
-}
-
-.app .cloud9::before {
-  width: 45px;
-  height: 45px;
-  top: -23px;
-  left: 14px;
-}
-
-.app .cloud9::after {
-  width: 55px;
-  height: 55px;
-  top: -28px;
-  right: 14px;
-}
-
-.app .cloud10 {
-  width: 170px;
-  height: 52px;
-  top: 30%;
   left: -170px;
-  animation: moveCloud10 29s linear infinite;
+  animation: moveCloud7 58s linear infinite;
   animation-delay: 18s;
 }
 
+.app .cloud7::before {
+  width: 150px;
+  height: 150px;
+  top: 0;
+  left: 0;
+}
+
+.app .cloud7::after {
+  width: 100px;
+  height: 100px;
+  top: 28px;
+  left: 85px;
+}
+
+.app .cloud8 {
+  width: 115px;
+  height: 115px;
+  top: 50%;
+  left: -135px;
+  animation: moveCloud8 46s linear infinite;
+  animation-delay: 12s;
+}
+
+.app .cloud8::before {
+  width: 115px;
+  height: 115px;
+  top: 0;
+  left: 0;
+}
+
+.app .cloud8::after {
+  width: 78px;
+  height: 78px;
+  top: 19px;
+  left: 68px;
+}
+
+.app .cloud9 {
+  width: 105px;
+  height: 105px;
+  top: 40%;
+  left: -125px;
+  animation: moveCloud9 44s linear infinite;
+  animation-delay: 25s;
+}
+
+.app .cloud9::before {
+  width: 105px;
+  height: 105px;
+  top: 0;
+  left: 0;
+}
+
+.app .cloud9::after {
+  width: 72px;
+  height: 72px;
+  top: 17px;
+  left: 62px;
+}
+
+.app .cloud10 {
+  width: 125px;
+  height: 125px;
+  top: 28%;
+  left: -145px;
+  animation: moveCloud10 50s linear infinite;
+  animation-delay: 30s;
+}
+
 .app .cloud10::before {
-  width: 68px;
-  height: 68px;
-  top: -34px;
-  left: 24px;
+  width: 125px;
+  height: 125px;
+  top: 0;
+  left: 0;
 }
 
 .app .cloud10::after {
-  width: 85px;
-  height: 85px;
-  top: -43px;
-  right: 24px;
+  width: 82px;
+  height: 82px;
+  top: 21px;
+  left: 72px;
 }
 
-/* 구름 애니메이션 키프레임 */
+/* 구름 애니메이션 키프레임 - 부드럽고 자연스럽게 */
 @keyframes moveCloud1 {
-  0% { left: -200px; }
-  100% { left: 100%; }
+  0% {
+    left: -200px;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.6;
+  }
+  97% {
+    opacity: 0.6;
+  }
+  100% {
+    left: calc(100% + 200px);
+    opacity: 0;
+  }
 }
 
 @keyframes moveCloud2 {
-  0% { left: -150px; }
-  100% { left: 100%; }
+  0% {
+    left: -150px;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.6;
+  }
+  97% {
+    opacity: 0.6;
+  }
+  100% {
+    left: calc(100% + 150px);
+    opacity: 0;
+  }
 }
 
 @keyframes moveCloud3 {
-  0% { left: -120px; }
-  100% { left: 100%; }
+  0% {
+    left: -200px;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.6;
+  }
+  97% {
+    opacity: 0.6;
+  }
+  100% {
+    left: calc(100% + 200px);
+    opacity: 0;
+  }
 }
 
 @keyframes moveCloud4 {
-  0% { left: -180px; }
-  100% { left: 100%; }
+  0% {
+    left: -160px;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.6;
+  }
+  97% {
+    opacity: 0.6;
+  }
+  100% {
+    left: calc(100% + 160px);
+    opacity: 0;
+  }
 }
 
 @keyframes moveCloud5 {
-  0% { left: -140px; }
-  100% { left: 100%; }
+  0% {
+    left: -180px;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.6;
+  }
+  97% {
+    opacity: 0.6;
+  }
+  100% {
+    left: calc(100% + 180px);
+    opacity: 0;
+  }
 }
 
 @keyframes moveCloud6 {
-  0% { left: -130px; }
-  100% { left: 100%; }
+  0% {
+    left: -140px;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.6;
+  }
+  97% {
+    opacity: 0.6;
+  }
+  100% {
+    left: calc(100% + 140px);
+    opacity: 0;
+  }
 }
 
 @keyframes moveCloud7 {
-  0% { left: -190px; }
-  100% { left: 100%; }
+  0% {
+    left: -200px;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.6;
+  }
+  97% {
+    opacity: 0.6;
+  }
+  100% {
+    left: calc(100% + 200px);
+    opacity: 0;
+  }
 }
 
 @keyframes moveCloud8 {
-  0% { left: -155px; }
-  100% { left: 100%; }
+  0% {
+    left: -170px;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.6;
+  }
+  97% {
+    opacity: 0.6;
+  }
+  100% {
+    left: calc(100% + 170px);
+    opacity: 0;
+  }
 }
 
 @keyframes moveCloud9 {
-  0% { left: -110px; }
-  100% { left: 100%; }
+  0% {
+    left: -150px;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.6;
+  }
+  97% {
+    opacity: 0.6;
+  }
+  100% {
+    left: calc(100% + 150px);
+    opacity: 0;
+  }
 }
 
 @keyframes moveCloud10 {
-  0% { left: -170px; }
-  100% { left: 100%; }
+  0% {
+    left: -180px;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.6;
+  }
+  97% {
+    opacity: 0.6;
+  }
+  100% {
+    left: calc(100% + 180px);
+    opacity: 0;
+  }
 }
 
 /* 콘텐츠를 구름 위로 표시 */
 .app-header,
-.app-main {
+.app-main,
+.dark-mode-toggle {
   position: relative;
-  z-index: 1;
+  z-index: 10;
   /* 콘텐츠에 미묘한 블러 배경 */
   isolation: isolate;
 }

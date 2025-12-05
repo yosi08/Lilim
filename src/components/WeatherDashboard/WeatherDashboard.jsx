@@ -117,7 +117,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
 
         <div className="weather-details">
           <div className="detail-item">
-            <Droplets size={20} />
+            <Droplets size={28} />
             <div className="detail-info">
               <span className="detail-label">습도</span>
               <span className="detail-value">{current.humidity}%</span>
@@ -125,7 +125,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
           </div>
 
           <div className="detail-item">
-            <Wind size={20} />
+            <Wind size={28} />
             <div className="detail-info">
               <span className="detail-label">풍속</span>
               <span className="detail-value">{current.windSpeed} m/s</span>
@@ -133,7 +133,7 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
           </div>
 
           <div className="detail-item">
-            <Cloud size={20} />
+            <Cloud size={28} />
             <div className="detail-info">
               <span className="detail-label">운량</span>
               <span className="detail-value">{current.clouds}%</span>
@@ -142,11 +142,11 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
 
           {aqi && (
             <div className="detail-item">
-              <CloudRain size={20} />
+              <CloudRain size={28} />
               <div className="detail-info">
                 <span className="detail-label">공기 질</span>
                 <span
-                
+
                   className="detail-value aqi"
                   style={{ color: getAQIColor(aqi) }}
                 >
