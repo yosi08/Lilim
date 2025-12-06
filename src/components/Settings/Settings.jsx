@@ -1,27 +1,103 @@
 import { X, User, Bell, Moon, Globe, Shield, Webhook } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { apiService } from '../../services/apiService';
 import './Settings.css';
 
 function Settings({ onClose, darkMode, onDarkModeToggle }) {
-  const [webhookUrl, setWebhookUrl] = useState('');
+  const [settings, setSettings] = useState({
+    webhookUrl: '',
+    requirements: '',
+    weatherNotifications: true,
+    scheduleNotifications: true,
+    locationEnabled: true,
+    language: 'ko',
+    timezone: 'Asia/Seoul'
+  });
   const [webhookStatus, setWebhookStatus] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const savedWebhookUrl = localStorage.getItem('webhookUrl');
-    if (savedWebhookUrl) {
-      setWebhookUrl(savedWebhookUrl);
-    }
+    loadSettings();
   }, []);
 
-  const handleSaveWebhook = () => {
-    if (webhookUrl.trim()) {
-      localStorage.setItem('webhookUrl', webhookUrl);
-      setWebhookStatus('웹훅 URL이 저장되었습니다.');
-      setTimeout(() => setWebhookStatus(''), 3000);
+  const loadSettings = async () => {
+    if (apiService.isAuthenticated()) {
+      try {
+        const userSettings = await apiService.getSettings();
+        setSettings(prev => ({ ...prev, ...userSettings }));
+      } catch (error) {
+        console.error('Error loading settings:', error);
+        loadLocalSettings();
+      }
+    } else {
+      loadLocalSettings();
+    }
+  };
+
+  const loadLocalSettings = () => {
+    const savedWebhookUrl = localStorage.getItem('webhookUrl');
+    if (savedWebhookUrl) {
+      setSettings(prev => ({ ...prev, webhookUrl: savedWebhookUrl }));
+    }
+  };
+
+  const handleSaveWebhook = async () => {
+    if (settings.webhookUrl.trim()) {
+      try {
+        if (apiService.isAuthenticated()) {
+          await apiService.updateSettings({ webhookUrl: settings.webhookUrl });
+        } else {
+          localStorage.setItem('webhookUrl', settings.webhookUrl);
+        }
+        setWebhookStatus('웹훅 URL이 저장되었습니다.');
+        setTimeout(() => setWebhookStatus(''), 3000);
+      } catch (error) {
+        console.error('Error saving webhook:', error);
+        setWebhookStatus('저장 중 오류가 발생했습니다.');
+        setTimeout(() => setWebhookStatus(''), 3000);
+      }
     } else {
       setWebhookStatus('유효한 URL을 입력해주세요.');
       setTimeout(() => setWebhookStatus(''), 3000);
     }
+  };
+
+  const handleSaveSettings = async () => {
+    try {
+      setLoading(true);
+      if (apiService.isAuthenticated()) {
+        await apiService.updateSettings(settings);
+        setWebhookStatus('설정이 저장되었습니다.');
+      } else {
+        localStorage.setItem('webhookUrl', settings.webhookUrl);
+        setWebhookStatus('설정이 저장되었습니다.');
+      }
+      setTimeout(() => setWebhookStatus(''), 3000);
+    } catch (error) {
+      console.error('Error saving settings:', error);
+      setWebhookStatus('저장 중 오류가 발생했습니다.');
+      setTimeout(() => setWebhookStatus(''), 3000);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!window.confirm('정말로 계정을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.')) {
+      return;
+    }
+
+    try {
+      await apiService.deleteAccount();
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      alert('계정 삭제 중 오류가 발생했습니다.');
+    }
+  };
+
+  const updateSetting = (key, value) => {
+    setSettings(prev => ({ ...prev, [key]: value }));
   };
 
   return (
@@ -70,8 +146,8 @@ function Settings({ onClose, darkMode, onDarkModeToggle }) {
               <input
                 type="text"
                 id="webhookUrl"
-                value={webhookUrl}
-                onChange={(e) => setWebhookUrl(e.target.value)}
+                value={settings.webhookUrl}
+                onChange={(e) => updateSetting('webhookUrl', e.target.value)}
                 placeholder="https://discord.com/api/webhooks/..."
               />
               <p className="toggle-description">
@@ -97,9 +173,14 @@ function Settings({ onClose, darkMode, onDarkModeToggle }) {
               <input
                 type="text"
                 id="Requirements"
+                value={settings.requirements}
+                onChange={(e) => updateSetting('requirements', e.target.value)}
+                placeholder="알레르기, 선호사항 등"
               />
             </div>
-            <button className="save-btn">변경 사항 저장</button>
+            <button className="save-btn" onClick={handleSaveSettings} disabled={loading}>
+              {loading ? '저장 중...' : '변경 사항 저장'}
+            </button>
           </section>
 
           <section className="settings-section">
@@ -134,7 +215,11 @@ function Settings({ onClose, darkMode, onDarkModeToggle }) {
                 <p className="toggle-description">중요한 날씨 변화 알림</p>
               </div>
               <label className="toggle-switch">
-                <input type="checkbox" defaultChecked />
+                <input
+                  type="checkbox"
+                  checked={settings.weatherNotifications}
+                  onChange={(e) => updateSetting('weatherNotifications', e.target.checked)}
+                />
                 <span className="toggle-slider"></span>
               </label>
             </div>
@@ -144,7 +229,11 @@ function Settings({ onClose, darkMode, onDarkModeToggle }) {
                 <p className="toggle-description">일정 시작 전 알림</p>
               </div>
               <label className="toggle-switch">
-                <input type="checkbox" defaultChecked />
+                <input
+                  type="checkbox"
+                  checked={settings.scheduleNotifications}
+                  onChange={(e) => updateSetting('scheduleNotifications', e.target.checked)}
+                />
                 <span className="toggle-slider"></span>
               </label>
             </div>
@@ -157,7 +246,11 @@ function Settings({ onClose, darkMode, onDarkModeToggle }) {
             </div>
             <div className="setting-item">
               <label htmlFor="language">언어</label>
-              <select id="language">
+              <select
+                id="language"
+                value={settings.language}
+                onChange={(e) => updateSetting('language', e.target.value)}
+              >
                 <option value="ko">한국어</option>
                 <option value="en">English</option>
                 <option value="ja">日本語</option>
@@ -166,7 +259,11 @@ function Settings({ onClose, darkMode, onDarkModeToggle }) {
             </div>
             <div className="setting-item">
               <label htmlFor="timezone">시간대</label>
-              <select id="timezone">
+              <select
+                id="timezone"
+                value={settings.timezone}
+                onChange={(e) => updateSetting('timezone', e.target.value)}
+              >
                 <option value="Asia/Seoul">서울 (GMT+9)</option>
                 <option value="Asia/Tokyo">도쿄 (GMT+9)</option>
                 <option value="America/New_York">뉴욕 (GMT-5)</option>
@@ -185,11 +282,15 @@ function Settings({ onClose, darkMode, onDarkModeToggle }) {
                 <p className="toggle-description">정확한 날씨 정보를 위해 위치 사용</p>
               </div>
               <label className="toggle-switch">
-                <input type="checkbox" defaultChecked />
+                <input
+                  type="checkbox"
+                  checked={settings.locationEnabled}
+                  onChange={(e) => updateSetting('locationEnabled', e.target.checked)}
+                />
                 <span className="toggle-slider"></span>
               </label>
             </div>
-            <button className="danger-btn">계정 삭제</button>
+            <button className="danger-btn" onClick={handleDeleteAccount}>계정 삭제</button>
           </section>
         </div>
       </div>

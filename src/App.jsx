@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { weatherService } from './services/weatherService';
+import { apiService } from './services/apiService';
 import { aiService } from './services/aiService';
 import WeatherDashboard from './components/WeatherDashboard/WeatherDashboard.jsx';
 import CalendarSchedule from './components/CalendarSchedule/CalendarSchedule.jsx';
@@ -13,7 +14,8 @@ import { CloudSun, User, Settings as SettingsIcon } from 'lucide-react';
 import './App.css';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(apiService.isAuthenticated());
+  const [user, setUser] = useState(null);
   const [showSignup, setShowSignup] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -31,9 +33,24 @@ function App() {
 
   useEffect(() => {
     if (isLoggedIn) {
+      loadUserData();
       loadWeatherData();
+    } else {
+      setLoading(false);
     }
   }, [isLoggedIn]);
+
+  const loadUserData = async () => {
+    try {
+      const userData = await apiService.getMe();
+      setUser(userData);
+    } catch (err) {
+      console.error('Error loading user data:', err);
+      if (err.response?.status === 401) {
+        handleLogout();
+      }
+    }
+  };
 
   useEffect(() => {
     if (weather) {
@@ -102,14 +119,22 @@ function App() {
     setShowProfile(!showProfile);
   };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setShowProfile(false);
-    setWeather(null);
-    setForecast(null);
-    setAirQuality(null);
-    setRecommendations(null);
-    setSchedule([]);
+  const handleLogout = async () => {
+    try {
+      await apiService.logout();
+    } catch (err) {
+      console.error('Logout error:', err);
+    } finally {
+      apiService.clearAuth();
+      setIsLoggedIn(false);
+      setUser(null);
+      setShowProfile(false);
+      setWeather(null);
+      setForecast(null);
+      setAirQuality(null);
+      setRecommendations(null);
+      setSchedule([]);
+    }
   };
 
   if (!isLoggedIn) {
@@ -191,7 +216,7 @@ function App() {
               <h3>사용자 프로필</h3>
             </div>
             <div className="profile-info">
-              <p><strong>이메일:</strong> 이메일이 들어가겟지.</p>
+              <p><strong>이메일:</strong> {user?.email || '로딩 중...'}</p>
             </div>
             <div className="profile-actions">
               <button className="settings-btn" onClick={() => { setShowSettings(true); setShowProfile(false); }}>

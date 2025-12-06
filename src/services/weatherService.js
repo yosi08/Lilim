@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { apiService } from './apiService';
 
 const WEATHER_API_KEY = import.meta.env.VITE_WEATHER_API_KEY || 'demo';
 const WEATHER_API_BASE = 'https://api.openweathermap.org/data/2.5';
@@ -117,6 +118,17 @@ export const weatherService = {
       return new Promise((resolve) => setTimeout(() => resolve(MOCK_FORECAST), 500));
     }
 
+    // If user is logged in, use backend API for personalized forecast
+    if (apiService.isAuthenticated()) {
+      try {
+        return await apiService.getForecast(lat, lon);
+      } catch (error) {
+        console.error('Error fetching personalized forecast from backend, falling back to OpenWeatherMap:', error);
+        // Fall back to OpenWeatherMap API if backend fails
+      }
+    }
+
+    // Use OpenWeatherMap API
     try {
       const response = await axios.get(`${WEATHER_API_BASE}/forecast`, {
         params: {

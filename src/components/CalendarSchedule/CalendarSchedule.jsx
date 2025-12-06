@@ -2,25 +2,64 @@ import { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import { format } from 'date-fns';
 import { Plus, Trash2, Clock } from 'lucide-react';
+import { apiService } from '../../services/apiService';
 import 'react-calendar/dist/Calendar.css';
 import './CalendarSchedule.css';
 
 function CalendarSchedule({ onScheduleChange }) {
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [schedules, setSchedules] = useState(() => {
-    const saved = localStorage.getItem('schedules');
-    return saved ? JSON.parse(saved) : {};
-  });
+  const [schedules, setSchedules] = useState({});
   const [newEvent, setNewEvent] = useState({ title: '', time: '' });
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('schedules', JSON.stringify(schedules));
+    loadPlans();
+  }, []);
+
+  useEffect(() => {
     // Notify parent component of schedule changes
     const dateKey = format(selectedDate, 'yyyy-MM-dd');
     if (onScheduleChange) {
       onScheduleChange(schedules[dateKey] || []);
     }
   }, [schedules, selectedDate, onScheduleChange]);
+
+  const loadPlans = async () => {
+    if (!apiService.isAuthenticated()) {
+      const saved = localStorage.getItem('schedules');
+      setSchedules(saved ? JSON.parse(saved) : {});
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const plans = await apiService.getPlans();
+
+      const schedulesMap = {};
+      plans.forEach(plan => {
+        const dateKey = plan.date || format(new Date(plan.time), 'yyyy-MM-dd');
+        if (!schedulesMap[dateKey]) {
+          schedulesMap[dateKey] = [];
+        }
+        schedulesMap[dateKey].push({
+          id: plan.planId || plan.id,
+          title: plan.title,
+          time: plan.time,
+          date: dateKey,
+          _planId: plan.planId
+        });
+      });
+
+      setSchedules(schedulesMap);
+      localStorage.setItem('schedules', JSON.stringify(schedulesMap));
+    } catch (error) {
+      console.error('Error loading plans:', error);
+      const saved = localStorage.getItem('schedules');
+      setSchedules(saved ? JSON.parse(saved) : {});
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -30,30 +69,60 @@ function CalendarSchedule({ onScheduleChange }) {
     }
   };
 
-  const addEvent = () => {
+  const addEvent = async () => {
     if (!newEvent.title || !newEvent.time) return;
 
     const dateKey = format(selectedDate, 'yyyy-MM-dd');
-    const event = {
-      id: crypto.randomUUID(),
-      title: newEvent.title,
-      time: `${dateKey}T${newEvent.time}`,
-      date: dateKey
-    };
+    const time = `${dateKey}T${newEvent.time}`;
 
-    setSchedules(prev => ({
-      ...prev,
-      [dateKey]: [...(prev[dateKey] || []), event]
-    }));
+    if (apiService.isAuthenticated()) {
+      try {
+        const planData = {
+          title: newEvent.title,
+          time: time,
+          date: dateKey
+        };
+        await apiService.createPlan(planData);
+        await loadPlans();
+      } catch (error) {
+        console.error('Error creating plan:', error);
+      }
+    } else {
+      const event = {
+        id: crypto.randomUUID(),
+        title: newEvent.title,
+        time: time,
+        date: dateKey
+      };
+
+      const newSchedules = {
+        ...schedules,
+        [dateKey]: [...(schedules[dateKey] || []), event]
+      };
+
+      setSchedules(newSchedules);
+      localStorage.setItem('schedules', JSON.stringify(newSchedules));
+    }
 
     setNewEvent({ title: '', time: '' });
   };
 
-  const deleteEvent = (dateKey, eventId) => {
-    setSchedules(prev => ({
-      ...prev,
-      [dateKey]: prev[dateKey].filter(e => e.id !== eventId)
-    }));
+  const deleteEvent = async (dateKey, eventId, planId) => {
+    if (apiService.isAuthenticated() && planId) {
+      try {
+        await apiService.deletePlan(planId);
+        await loadPlans();
+      } catch (error) {
+        console.error('Error deleting plan:', error);
+      }
+    } else {
+      const newSchedules = {
+        ...schedules,
+        [dateKey]: schedules[dateKey].filter(e => e.id !== eventId)
+      };
+      setSchedules(newSchedules);
+      localStorage.setItem('schedules', JSON.stringify(newSchedules));
+    }
   };
 
   const getTodaySchedules = () => {
@@ -87,23 +156,56 @@ function CalendarSchedule({ onScheduleChange }) {
 
 export function ScheduleContainer({ onScheduleChange }) {
   const selectedDate = new Date();
-  const [schedules, setSchedules] = useState(() => {
-    const saved = localStorage.getItem('schedules');
-    return saved ? JSON.parse(saved) : {};
-  });
+  const [schedules, setSchedules] = useState({});
   const [newEvent, setNewEvent] = useState({ title: '', time: '' });
   const [showImage, setShowImage] = useState(false);
   const [isComposing, setIsComposing] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('schedules', JSON.stringify(schedules));
+    loadPlans();
+  }, []);
+
+  useEffect(() => {
     const dateKey = format(selectedDate, 'yyyy-MM-dd');
     if (onScheduleChange) {
       onScheduleChange(schedules[dateKey] || []);
     }
   }, [schedules, onScheduleChange]);
 
-  const addEvent = () => {
+  const loadPlans = async () => {
+    if (!apiService.isAuthenticated()) {
+      const saved = localStorage.getItem('schedules');
+      setSchedules(saved ? JSON.parse(saved) : {});
+      return;
+    }
+
+    try {
+      const plans = await apiService.getPlans();
+      const schedulesMap = {};
+      plans.forEach(plan => {
+        const dateKey = plan.date || format(new Date(plan.time), 'yyyy-MM-dd');
+        if (!schedulesMap[dateKey]) {
+          schedulesMap[dateKey] = [];
+        }
+        schedulesMap[dateKey].push({
+          id: plan.planId || plan.id,
+          title: plan.title,
+          time: plan.time,
+          date: dateKey,
+          _planId: plan.planId
+        });
+      });
+
+      setSchedules(schedulesMap);
+      localStorage.setItem('schedules', JSON.stringify(schedulesMap));
+    } catch (error) {
+      console.error('Error loading plans:', error);
+      const saved = localStorage.getItem('schedules');
+      setSchedules(saved ? JSON.parse(saved) : {});
+    }
+  };
+
+  const addEvent = async () => {
     if (!newEvent.title) return;
 
     // "테트리게이"일 때 테트리오로 이동
@@ -113,17 +215,36 @@ export function ScheduleContainer({ onScheduleChange }) {
     }
 
     const dateKey = format(selectedDate, 'yyyy-MM-dd');
-    const event = {
-      id: crypto.randomUUID(),
-      title: newEvent.title,
-      time: newEvent.time ? `${dateKey}T${newEvent.time}` : null,
-      date: dateKey
-    };
+    const time = newEvent.time ? `${dateKey}T${newEvent.time}` : null;
 
-    setSchedules(prev => ({
-      ...prev,
-      [dateKey]: [...(prev[dateKey] || []), event]
-    }));
+    if (apiService.isAuthenticated()) {
+      try {
+        const planData = {
+          title: newEvent.title,
+          time: time,
+          date: dateKey
+        };
+        await apiService.createPlan(planData);
+        await loadPlans();
+      } catch (error) {
+        console.error('Error creating plan:', error);
+      }
+    } else {
+      const event = {
+        id: crypto.randomUUID(),
+        title: newEvent.title,
+        time: time,
+        date: dateKey
+      };
+
+      const newSchedules = {
+        ...schedules,
+        [dateKey]: [...(schedules[dateKey] || []), event]
+      };
+
+      setSchedules(newSchedules);
+      localStorage.setItem('schedules', JSON.stringify(newSchedules));
+    }
 
     // "이민길"일 때 이미지 표시
     if (newEvent.title === '이민길') {
@@ -136,11 +257,22 @@ export function ScheduleContainer({ onScheduleChange }) {
     setNewEvent({ title: '', time: '' });
   };
 
-  const deleteEvent = (dateKey, eventId) => {
-    setSchedules(prev => ({
-      ...prev,
-      [dateKey]: prev[dateKey].filter(e => e.id !== eventId)
-    }));
+  const deleteEvent = async (dateKey, eventId, planId) => {
+    if (apiService.isAuthenticated() && planId) {
+      try {
+        await apiService.deletePlan(planId);
+        await loadPlans();
+      } catch (error) {
+        console.error('Error deleting plan:', error);
+      }
+    } else {
+      const newSchedules = {
+        ...schedules,
+        [dateKey]: schedules[dateKey].filter(e => e.id !== eventId)
+      };
+      setSchedules(newSchedules);
+      localStorage.setItem('schedules', JSON.stringify(newSchedules));
+    }
   };
 
   const getTodaySchedules = () => {
@@ -208,7 +340,7 @@ export function ScheduleContainer({ onScheduleChange }) {
                   <span className="event-title">{event.title}</span>
                 </div>
                 <button
-                  onClick={() => deleteEvent(event.date, event.id)}
+                  onClick={() => deleteEvent(event.date, event.id, event._planId)}
                   className="delete-btn"
                 >
                   <Trash2 size={16} />
