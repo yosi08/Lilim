@@ -15,6 +15,7 @@ export default function NotificationPanel({ recommendations, weather }) {
     if (enabled && recommendations) {
       createNotifications();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [recommendations, enabled]);
 
   useEffect(() => {

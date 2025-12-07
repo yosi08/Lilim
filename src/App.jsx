@@ -5,7 +5,6 @@ import { aiService } from './services/aiService';
 import WeatherDashboard from './components/WeatherDashboard/WeatherDashboard.jsx';
 import CalendarSchedule from './components/CalendarSchedule/CalendarSchedule.jsx';
 import NotificationPanel from './components/NotificationPanel/NotificationPanel.jsx';
-import RecommendationPanel from './components/RecommendationPanel/RecommendationPanel.jsx';
 import DarkModeToggle from './components/DarkModeToggle/DarkModeToggle.jsx';
 import Login from './components/Login/Login.jsx';
 import Signup from './components/Signup/Signup.jsx';
@@ -250,7 +249,6 @@ function App() {
           </div>
 
           <div className="recommendations-section">
-            <RecommendationPanel recommendations={recommendations} />
             <NotificationPanel
               recommendations={recommendations}
               weather={weather}

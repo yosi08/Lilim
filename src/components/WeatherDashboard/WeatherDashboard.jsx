@@ -15,7 +15,6 @@ import {
   Moon,
   CloudMoon
 } from 'lucide-react';
-import { ScheduleContainer } from '../CalendarSchedule/CalendarSchedule';
 import './WeatherDashboard.css';
 
 export default function WeatherDashboard({ weather, forecast, airQuality }) {
@@ -198,97 +197,69 @@ export default function WeatherDashboard({ weather, forecast, airQuality }) {
         </div>
       )}
 
-      {forecast && forecast.list && (
-        <div className="weather-forecast">
-          <h3>7일 예보</h3>
-          <div className="forecast-list">
-            {(() => {
-              const dailyForecasts = forecast.list
-                .filter((_, index) => index % 8 === 0)
-                .slice(0, 7);
+      <div className="weather-forecast">
+        <h3>7일 예보</h3>
+        <div className="forecast-list">
+          {(() => {
+            console.log('Forecast data:', forecast);
 
-              const extendedForecasts = [...dailyForecasts];
+            if (!forecast || !forecast.list || forecast.list.length === 0) {
+              console.log('No forecast data available');
+              return <p>예보 데이터를 불러올 수 없습니다.</p>;
+            }
 
-              if (extendedForecasts.length < 7 && extendedForecasts.length > 0) {
-                const lastItem = extendedForecasts[extendedForecasts.length - 1];
-                const dayInSeconds = 86400;
-                const fixedTemps = [18, 20];
+            console.log('Forecast list length:', forecast.list.length);
 
-                for (let i = extendedForecasts.length; i < 7; i++) {
-                  const daysToAdd = i - extendedForecasts.length + 1;
-                  const tempIndex = i - extendedForecasts.length;
-                  extendedForecasts.push({
-                    dt: lastItem.dt + (dayInSeconds * daysToAdd),
-                    main: {
-                      temp: fixedTemps[tempIndex] || lastItem.main.temp,
-                      feels_like: fixedTemps[tempIndex] || lastItem.main.feels_like,
-                      temp_min: fixedTemps[tempIndex] - 2,
-                      temp_max: fixedTemps[tempIndex] + 2,
-                      pressure: lastItem.main.pressure,
-                      humidity: lastItem.main.humidity
-                    },
-                    weather: lastItem.weather
-                  });
-                }
+            // 하루에 하나씩 선택 (3시간 간격 * 8 = 24시간)
+            const dailyForecasts = [];
+            for (let i = 0; i < Math.min(7, forecast.list.length); i += 1) {
+              const index = i * 8;
+              if (index < forecast.list.length) {
+                dailyForecasts.push(forecast.list[index]);
               }
+            }
 
-              // 오늘 날짜 기준으로 다음 월요일부터 시작하는 7일 생성
-              const today = new Date();
-              const currentDay = today.getDay(); // 0(일) ~ 6(토)
-              const daysUntilMonday = currentDay === 0 ? 1 : (8 - currentDay) % 7 || 7;
+            console.log('Daily forecasts:', dailyForecasts);
 
-              // 다음 월요일부터 7일간의 예보 생성
-              const weekForecasts = [];
-              for (let i = 0; i < 7; i++) {
-                const targetDate = new Date(today);
-                targetDate.setDate(today.getDate() + daysUntilMonday + i);
-
-                // 해당 날짜에 가장 가까운 예보 데이터 찾기
-                const closestForecast = extendedForecasts.reduce((closest, forecast) => {
-                  const forecastDate = new Date(forecast.dt * 1000);
-                  const currentDiff = Math.abs(targetDate - forecastDate);
-                  const closestDiff = Math.abs(targetDate - new Date(closest.dt * 1000));
-                  return currentDiff < closestDiff ? forecast : closest;
-                }, extendedForecasts[0]);
-
-                weekForecasts.push({
-                  ...closestForecast,
-                  dt: Math.floor(targetDate.getTime() / 1000)
-                });
-              }
-
-              return weekForecasts.map((item, index) => {
-                const temp = Math.round(item.main.temp);
-                const icon = item.weather[0].icon;
-                const desc = item.weather[0].description;
-
-                // 요일 이름 배열 (월요일부터 시작)
-                const dayNames = ['월', '화', '수', '목', '금', '토', '일'];
-
-                return (
-                  <div
-                    key={index}
-                    className={`forecast-item ${selectedDay === index ? 'selected' : ''}`}
-                    onClick={() => handleDayClick(index)}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <div className="forecast-day">
-                      {dayNames[index]}
-                    </div>
-                    <div className="forecast-icon">
-                      {getWeatherIcon(icon, 48)}
-                    </div>
-                    <div className="forecast-temp">{temp}°C</div>
-                    <div className="forecast-desc">{desc}</div>
-                  </div>
-                );
+            // 7일이 안 되면 마지막 데이터로 채우기
+            while (dailyForecasts.length < 7 && dailyForecasts.length > 0) {
+              const lastItem = dailyForecasts[dailyForecasts.length - 1];
+              dailyForecasts.push({
+                ...lastItem,
+                dt: lastItem.dt + 86400 // 하루 추가
               });
-            })()}
-          </div>
-        </div>
-      )}
+            }
 
-      <ScheduleContainer />
+            const dayNames = ['일', '월', '화', '수', '목', '금', '토'];
+
+            return dailyForecasts.map((item, index) => {
+              const date = new Date(item.dt * 1000);
+              const temp = Math.round(item.main.temp);
+              const icon = item.weather[0].icon;
+              const desc = item.weather[0].description;
+              const dayName = dayNames[date.getDay()];
+
+              return (
+                <div
+                  key={index}
+                  className={`forecast-item ${selectedDay === index ? 'selected' : ''}`}
+                  onClick={() => handleDayClick(index)}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <div className="forecast-day">
+                    {index === 0 ? '오늘' : dayName}
+                  </div>
+                  <div className="forecast-icon">
+                    {getWeatherIcon(icon, 48)}
+                  </div>
+                  <div className="forecast-temp">{temp}°C</div>
+                  <div className="forecast-desc">{desc}</div>
+                </div>
+              );
+            });
+          })()}
+        </div>
+      </div>
     </div>
   );
 }

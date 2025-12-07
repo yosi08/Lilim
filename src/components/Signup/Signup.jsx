@@ -4,6 +4,7 @@ import '../Login/Login.css';
 
 function Signup({ onBackToLogin }) {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -27,7 +28,7 @@ function Signup({ onBackToLogin }) {
     setLoading(true);
 
     try {
-      await apiService.register(email, password);
+      await apiService.register(email, password, name);
       setSuccess(true);
       setTimeout(() => {
         onBackToLogin();
@@ -64,6 +65,18 @@ function Signup({ onBackToLogin }) {
               name="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="name">이름</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
             />
           </div>
